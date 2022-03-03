@@ -1,0 +1,64 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Purchase Document Upload">
+                <p-card>
+                    <form #f="ngForm" name="purchaseUploadForm">
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <div style="font-style: italic; font-size: 13px; color:#105c61;">
+                                * Please enter appropriate purchase bill number & click search button
+                            </div>
+                            <div style="font-style: italic; font-size: 13px; color:#105c61;">
+                                * Once bill details appeared on screen, please upload respective bill image
+                            </div>
+                            <div class="p-col-1"></div>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="p-inputgroup">
+                                        <span class="p-float-label">
+                                            <input type="text" name="_billNo" pInputText [(ngModel)]="billNo" required>
+                                            <button type="button" pButton pRipple icon="pi pi-search"
+                                                (click)="onSearch()" styleClass="p-button-warn"></button>
+                                        <label for="_billNo">Bill No</label>
+                                    </span>
+                                </div>
+                            </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <input type="text" name="_billAmnt" pInputText [(ngModel)]="billAmount"
+                                            readonly="true" required>
+                                        <label for="_billAmnt">Bill Amount</label>
+                                    </span>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <span class="p-float-label">
+                                        <input type="text" name="_billDate" pInputText [(ngModel)]="billDate"
+                                            readonly="true" required>
+                                        <label for="_billDate">Bill Date</label>
+                                    </span>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12">
+                                    <div class="div-header" style="font-weight: 500;">Bill Upload</div>
+                                    <div class="p-col-12 border-blue">
+                                        <div class="p-grid">
+                                            <div class="p-field p-col-12 p-md-12 p-lg-4">
+                                                <label for="_bill">Bill Copy<span class="form-mandatory-field">*</span></label>
+                                                <input #bill class="p-col-12" name="_bill"
+                                                    type="file" pInputText (change)="onFileUpload($event.target.files)"
+                                                    accept=".pdf,.png,.jpg,.jpeg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button type="button" pButton label="Submit" icon="pi pi-send" (click)="onUpload()" [disabled]="(!f.valid)"></button>
+                            </div>
+                        </div>
+                    </form>
+                </p-card>
+            </p-panel>
+        </div>
+    </div>
+</block-ui>

@@ -1,0 +1,88 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Student Facility">
+            <p-card>
+                <form #f="ngForm" name="facilityForm">
+                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_districtname">District Name</label>
+                                <input type="text" name="_districtname" pInputText [(ngModel)]="districtName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_talukname">Taluk Name</label>
+                                <input type="text" name="_talukname" pInputText [(ngModel)]="talukName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label for="_hostelname">Hostel Name</label>
+                                <input type="text" name="_hostelname" pInputText [(ngModel)]="hostelName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <div><label for="_facilityname">Facility Name</label></div>
+                                <p-dropdown name="_facilityname" [options]="FacilitynameOptions"
+                                    (onClick)="onSelect('FC')" [(ngModel)]="facilityName"
+                                    (onChange)="onDataChecking()" required>
+                                </p-dropdown>
+                            </div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-2">
+                                <label for="_noofcounts">Number of counts</label>
+                                <input type="text" name="_noofcounts" pInputText [(ngModel)]="noofCounts" required />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_remarks">Remarks</label>
+                                <input type="text" name="_remarks" pInputText [(ngModel)]="remarks" required />
+                            </div>
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Submit" (click)="onSubmit()"
+                                [disabled]="(!f.valid)" class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="View" (click)="onView()"
+                                    class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" 
+                                    icon="pi pi-times-circle" (click)="onClear()"></button>
+                            </div>
+                        </div>
+                            <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                                [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                                styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th style="width: 50px;">Edit/Update</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr [pSelectableRow]="rowData" class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">Edit/Update :</span> <span> <button style="height: 1.8rem;" (click)="onRowSelect($event, rowData)"
+                                                icon="pi pi-pencil" pButton type="button">
+                                               </button></span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        
+                    </div>
+                </form>
+            </p-card>
+        </p-panel>
+    </div>
+</div>

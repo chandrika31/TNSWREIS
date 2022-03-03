@@ -1,0 +1,189 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-panel header="Warden Details Report">
+            <p-card>
+                <div class="p-col-12 no-pad-top">
+                    <div class="p-grid">
+                        <div class="p-col-2"></div>
+                        <div class="p-col-12 p-md-12 p-lg-10 no-pad-top">
+                            <div class="p-grid">
+                                <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                                    <div><label for="_district">District</label>
+                                    </div>
+                                    <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                        (onClick)="onSelect('D')" (onChange)="loadTable()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                                    <div><label for="_taluk">Taluk</label>
+                                    </div>
+                                    <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                        (onClick)="onSelect('T')" (onChange)="loadTable()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                                    <div><label for="_status">Status</label>
+                                    </div>
+                                    <p-dropdown name="_status" [options]="statusOptions" [(ngModel)]="status"
+                                        (onChange)="filterTable()" required>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <div style="text-align: right;">
+                                <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                                    style="color: yellowgreen;" (click)="dt.exportCSV()"
+                                    pTooltip="Excel-File download"></button>
+                            </div>
+                            <p-table #dt [value]="wardenDetails" [columns]="wardenDetailsCols"
+                                styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
+                                [rowsPerPageOptions]="[10,20,30,40]" totalR ecords="totalRecords"
+                                exportFilename="WARDEN_DETAILS_REPORT">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th *ngIf="editButton">Edit</th>
+                                        <th *ngIf="transferButton">Discontinue</th>
+                                        <th *ngIf="transferButton">Transfer</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                        <td *ngIf="editButton">
+                                            <span class="p-column-title">
+                                                Edit :
+                                            </span><span><button icon="pi pi-pencil" pButton type="button"
+                                            pTooltip="Tap to update end date" (click)="onEdit(rowData)">
+                                        </button></span></td>
+                                        <td *ngIf="transferButton">
+                                            <span class="p-column-title">
+                                                Discontinue :
+                                            </span><span><button icon="pi pi-times-circle" pButton type="button"
+                                                pTooltip="Tap to update end date" (click)="onDiscontinue(rowData)">
+                                            </button></span></td>
+                                        <td *ngIf="transferButton">
+                                            <span class="p-column-title">
+                                                Transfer :
+                                            </span><span><button pButton type="button" icon="pi pi-arrow-circle-right"
+                                                pTooltip="Tap to transfer" [disabled]="(rowData.disableTransfer == 'true')" (click)="onTransfer(rowData)"></button>
+                                            </span></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </p-panel>
+    </div>
+</div>
+<!-- end date update  -->
+<p-dialog header="End Date Update" [(visible)]="show" [modal]="true" [maximizable]="true"
+    [style]="{width: '55vw', height: '45vw'}">
+    <div class="p-col-1"></div>
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-card>
+        <div class="p-grid div-main">
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_wardenname">Warden Name</label></div>
+                <input type="text" name="_wardenname" pInputText [(ngModel)]="wardenName" readonly="true">
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_joindate">Hostel Joined Date</label></div>
+                <input type="text" name="_joindate" pInputText [(ngModel)]="joinDate" readonly="true">
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
+                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="endDate" [showIcon]="true"
+                    name="_edate"></p-calendar>
+            </div>
+            <div style="font-size: smaller;">*Note: Please select hostel leaving date</div>
+        <div class="p-col-12" style="text-align: center;">
+            <button pButton type="button" label="Submit" (click)="onSubmit()" ></button>
+        </div>
+        </div>
+    </p-card>
+</p-dialog>
+<!-- warden transfer  -->
+<p-dialog header="Warden Transfer" [(visible)]="showTransfer" [modal]="true" [maximizable]="true"
+    [style]="{width: '50vw', height: '40vw'}">
+    <div class="p-col-1"></div>
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-card>
+        <div class="p-grid div-main">
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_wardenname">Warden Name</label></div>
+                <input type="text" name="_wardenname" pInputText [(ngModel)]="wardenName" readonly="true">
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_joindate">Hostel Joined Date</label></div>
+                <input type="text" name="_joindate" pInputText [(ngModel)]="joinDate" readonly="true">
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-4">
+                <div><label for="_edate">End Date<span class="form-mandatory-field">*</span></label></div>
+                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="endDate" [showIcon]="true"
+                    name="_edate"></p-calendar>
+            </div>
+            <div style="font-size: smaller">*Note: Please select hostel leaving date</div>
+            <div class="p-col-12" style="text-align: center;">
+                <button pButton type="button" label="Submit" (click)="onSubmit()" [disabled]="(!endDate)"></button>
+            </div>
+        </div>
+    </p-card>
+    <div class="p-col-1"></div>
+    <p-card>
+        <div class="p-col-12 no-pad-top">
+            <div class="p-grid">
+
+                <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                    <div class="p-grid">
+                        <div #row1 class="p-col-6 p-md-6 p-lg-3">
+                            <div><label for="_district">District<span class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="districtName"
+                                (onClick)="onSelect('D')" required>
+                            </p-dropdown>
+                        </div>
+                        <div #row1 class="p-col-6 p-md-6 p-lg-3">
+                            <div><label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="talukName"
+                                (onClick)="onSelect('T')" (onChange)="selectDistrict()" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-4">
+                            <div><label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
+                            </div>
+                            <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
+                                placeholder="Transfer to" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                            <button pButton type="button" label="Transfer" (click)="Transfer($event)"
+                                [disabled]="(!districtName || !talukName || !hostelName )"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-card>
+</p-dialog>

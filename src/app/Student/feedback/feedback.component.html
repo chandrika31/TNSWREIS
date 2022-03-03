@@ -1,0 +1,71 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="FeedBack">
+            <p-card>
+                <form #f="ngForm" name="feedbackForm">
+                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_studentname">Student Name</label>
+                                <input type="text" name="_studentname" disabled="true" pInputText [(ngModel)]="studentName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label for="_hostelname">Hostel Name</label>
+                                <input type="text" name="_hostelname" disabled="true" pInputText [(ngModel)]="hostelName" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <div><label for="_feedback">Feedback</label></div>
+                                <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" name="_feedback" pInputText [(ngModel)]="feedBack"></textarea>
+                            </div>
+                            <div #row2 class="p-col-12 p-md-12 p-lg-2">
+                                <label for="_uploadimg">Upload Image(if any)</label>
+                                <input name="_uploadimg" type="file" pInputText
+                                 (change)="uploadFile($event)"accept=".png,.jpg,.jpeg" />
+                            </div>
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Submit" (click)="onSubmit()"
+                                [disabled]='(!f.valid || !f.dirty)' class="btn-bg"></button>&nbsp;
+                           
+                                    <button pButton type="button" label="Clear" 
+                                    icon="pi pi-times-circle" (click)="onClear()"></button>
+                            </div>
+                        </div>
+                            <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                                [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                                styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr [pSelectableRow]="rowData" class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        
+                    </div>
+                </form>
+            </p-card>
+        </p-panel>
+    </div>
+</div>

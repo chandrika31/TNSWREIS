@@ -1,0 +1,818 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Registration">
+                <p-card>
+                    <form #f="ngForm" name="_registrationForm">
+                        <div class="p-col-12 p-md-12 p-lg-12">
+                            <p-tabView>
+                                <p-tabPanel header="Student Info">
+                                    <div #main1 class="p-grid">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-10">
+                                                    <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                                        <div #grid1 class="p-grid div-main"
+                                                            style="padding-left: 0 !important">
+                                                            <div #field1 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                                <span class="p-float-label">
+                                                                    <input type="text" name="_studentname" id="sname"
+                                                                        pInputText [(ngModel)]="obj.studentName"
+                                                                        required>
+                                                                    <label for="_studentname">Student Name<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field2 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                                <span class="p-float-label">
+                                                                    <input type="text" name="_emisno" pInputText
+                                                                        [(ngModel)]="obj.emisno" minlength="1"
+                                                                        maxlength="16" appInputFormat="digitOnly"
+                                                                        required>
+                                                                    <label for="_emisno">EMIS No/Reg No.<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field3 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span #cal class="p-float-label">
+                                                                    <p-calendar dateFormat="dd/mm/yy"
+                                                                        [appendTo]="field3" [showOtherMonths]="false"
+                                                                        [(ngModel)]="obj.dob" name="_dob"
+                                                                        [monthNavigator]="true" [readonlyInput]="true"
+                                                                        [yearNavigator]="true" yearRange="{{yearRange}}"
+                                                                        inputId="dateofbirth" [showIcon]="true"
+                                                                        (onSelect)="calculateAge()" required>
+                                                                    </p-calendar>
+                                                                    <label for="_dob">D.O.B<span
+                                                                            class="form-mandatory-field">*</span>
+                                                                    </label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                                                <span class="p-float-label">
+                                                                    <input type="text" name="_age" id="sname" pInputText
+                                                                        [(ngModel)]="ageTxt" [disabled]="true">
+                                                                    <label for="_age">Age</label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
+                                                                <span class="p-float-label p-input-icon-right">
+                                                                    <p-dropdown name="_bloodgroup"
+                                                                        [options]="bloodGroupOptions"
+                                                                        (onClick)="onSelect('BG')"
+                                                                        [(ngModel)]="obj.bloodGroup" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_bloodgroup">Blood Group<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                                        <div #grid2 class="p-grid">
+                                                            <div #field6 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label p-input-icon-right">
+                                                                    <p-dropdown name="_gender" [options]="genderOptions"
+                                                                        (onClick)="onSelect('GD')"
+                                                                        [(ngModel)]="obj.gender" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_gender">Gender<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field7 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label p-input-icon-right">
+                                                                    <p-dropdown name="_mothertongue"
+                                                                        [options]="motherTongueOptions"
+                                                                        (onClick)="onSelect('MT')"
+                                                                        [(ngModel)]="obj.motherTongue" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_mothertongue">Mother Tongue<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field8 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label p-input-icon-right">
+                                                                    <p-dropdown name="_caste" [options]="casteOptions"
+                                                                        (onClick)="onSelect('CT')"
+                                                                        (onChange)="refreshFields('C')"
+                                                                        [(ngModel)]="obj.caste" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_caste">Caste<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field9 class="p-field p-col-12 p-md-6 p-lg-2">
+                                                                <span class="p-float-label">
+                                                                    <p-dropdown name="_subcaste"
+                                                                        [options]="subCasteOptions"
+                                                                        (onClick)="onSelect('SC')"
+                                                                        [(ngModel)]="obj.subCaste" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_subcaste">Sub Caste<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field10 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label p-input-icon-right">
+                                                                    <p-dropdown name="_religion"
+                                                                        [options]="religionOptions"
+                                                                        (onClick)="onSelect('RL')"
+                                                                        [(ngModel)]="obj.religion" required>
+                                                                    </p-dropdown>
+                                                                    <label for="_religion">Religion<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+                                                            <div #field11 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                                <span class="p-float-label">
+                                                                    <input type="text" name="_mobno" pInputText
+                                                                        [(ngModel)]="obj.mobileNo"
+                                                                        appInputFormat="digitOnly" minlength="10"
+                                                                        maxlength="10" required>
+                                                                    <label for="_mobno">Mobile No<span
+                                                                            class="form-mandatory-field">*</span></label>
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-top">
+                                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                                        <div #field16><img [src]="studentImage"
+                                                                style="width: 100px; height: 100px;" />
+                                                            <input style="display: none" name="_studentimage"
+                                                                type="file" (change)="onFileUpload($event, 1)"
+                                                                #userFile>
+                                                            <button class="b-size" style="margin: 0 !important;"
+                                                                icon="pi pi-plus edit-size" pButton type="file" #file
+                                                                (click)="userFile.click()">
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div #row2 class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                                                <div class="p-grid">
+                                                    <div #field12 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_altmobno" pInputText
+                                                                [(ngModel)]="obj.altMobNo" appInputFormat="digitOnly"
+                                                                minlength="10" maxlength="10">
+                                                            <label for="_altmobno">Alternate Mobile No</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field13 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_admissionno" pInputText
+                                                                [(ngModel)]="obj.admissionNo"
+                                                                appInputFormat="noSpecialChars" minlength="1"
+                                                                maxlength="40" required>
+                                                            <label for="_admissionno">Admission No<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field14 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_totalyincome" pInputText
+                                                                [(ngModel)]="obj.totalYIncome"
+                                                                appInputFormat="digitOnly" minlength="1" maxlength="30"
+                                                                required>
+                                                            <label for="_totalyincome">Annual
+                                                                Income<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field15 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_remarks" pInputText
+                                                                [(ngModel)]="obj.remarks">
+                                                            <label for="_remarks">Remarks</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main2 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Institution Details</div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field17 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <p-radioButton name="_school" label="School" value=1
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType()">
+                                                        </p-radioButton> &nbsp;
+                                                        <p-radioButton name="_college" label="College" value=0
+                                                            [(ngModel)]="institutionType" (onClick)="onSelectType()">
+                                                        </p-radioButton>
+                                                    </div>
+                                                    <div #field18 *ngIf="institutionType=='1'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <!-- <p-dropdown name="_schoolname" [options]="schoolOptions"
+                                                        (onClick)="onSelect('SC')" [(ngModel)]="school"
+                                                        required>
+                                                    </p-dropdown> -->
+                                                            <input type="text" name="_schoolname" pInputText
+                                                                [(ngModel)]="obj.instituteName" required>
+                                                            <label for="_schoolname">School Name<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field19 *ngIf="institutionType=='1'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_class" [options]="classOptions"
+                                                                (onClick)="onSelect('CL')"
+                                                                (onChange)="checkScholardhipEligibility()"
+                                                                [(ngModel)]="obj.classId" required>
+                                                            </p-dropdown>
+                                                            <label for="_class">Class<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <!-- <div #field20  
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_schoolmedium" [options]="mediumOptions"
+                                                                (onClick)="onSelect('MD')" [(ngModel)]="obj.medium">
+                                                            </p-dropdown>
+                                                            <label for="_schoolmedium">Medium</label>
+                                                        </span>
+                                                    </div> -->
+                                                    <div #field21 *ngIf="institutionType=='0'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <!-- <p-dropdown name="_collegename" [options]="schoolOptions"
+                                                        (onClick)="onSelect('SC')" [(ngModel)]="school"
+                                                        required>
+                                                    </p-dropdown> -->
+                                                            <input type="text" name="_collegename" pInputText
+                                                                [(ngModel)]="obj.instituteName" required>
+                                                            <label for="_collegename">College Name<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field22 *ngIf="institutionType=='0'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_course" [options]="classOptions"
+                                                                (onClick)="onSelect('CL')" [(ngModel)]="obj.classId"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_course">Course Studying<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field22 *ngIf="institutionType=='0'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_courseyear" [options]="courseYearOptions"
+                                                                (onClick)="onSelect('CL')" [(ngModel)]="obj.courseYearId"
+                                                                required>
+                                                            </p-dropdown>
+                                                            <label for="_courseyear">Year<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field23 *ngIf="institutionType=='0'"
+                                                        class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_coursetitle" pInputText
+                                                                [(ngModel)]="obj.courseTitle">
+                                                            <label for="_coursetitle">Course Title</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field20 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <p-dropdown name="_schoolmedium" [options]="mediumOptions"
+                                                                (onClick)="onSelect('MD')" [(ngModel)]="obj.medium">
+                                                            </p-dropdown>
+                                                            <label for="_schoolmedium">Medium</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field24 *ngIf="enableScholarship"
+                                                        class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_scholarshipid" pInputText
+                                                                [(ngModel)]="obj.scholarshipId">
+                                                            <label for="_scholarshipid">Scholarship No.</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main3 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Last Studied Details</div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field25 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_lastinstitutionname" pInputText
+                                                                [(ngModel)]="obj.lastStudiedInstituteName">
+                                                            <label for="_lastinstitutionname">Institution Name</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field26 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_lastaddress" pInputText
+                                                                [(ngModel)]="obj.lastStudiedInstituteAddress">
+                                                            <label for="_lastaddress">Institution Address</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main4 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Distance Details - in Kms
+                                            </div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field27 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_distance1" pInputText
+                                                                [(ngModel)]="obj.distanceFromHostelToHome"
+                                                                appInputFormat="digitOnly" required>
+                                                            <label for="_distance1">Distance From Hostel To Home<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field28 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_distance2" pInputText
+                                                                [(ngModel)]="obj.distanceFromHostelToInstitute"
+                                                                appInputFormat="digitOnly" required>
+                                                            <label for="_distance2">Distance From Hostel To
+                                                                Institute<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main5 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Disability If any
+                                                <p-checkbox #field29 [(ngModel)]="isDisability" binary="true"
+                                                    inputId="binary">
+                                                </p-checkbox>
+                                            </div>
+                                            <div *ngIf="isDisability" #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field30 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_disability" pInputText
+                                                                [(ngModel)]="obj.disabilityType" required>
+                                                            <label for="_disability">Disability Type<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main6 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Address</div>
+                                            <div #row1 class="p-col-12 p-md-12 p-lg-12 div-main border-blue">
+                                                <div #field31 class="p-field p-col-12 p-md-12 p-lg-4 no-pad-top">
+                                                    <span class="p-float-label">
+                                                        <input type="text" name="_addressline1" pInputText
+                                                            [(ngModel)]="obj.address1" required>
+                                                        <label for="_addressline1">Address Line 1<span
+                                                                class="form-mandatory-field">*</span></label>
+                                                    </span>
+                                                    <span style="font-size: 12px;">Door no., Building, Company</span>
+                                                </div>
+                                                <div #field32 class="p-field p-col-12 p-md-12 p-lg-4 no-pad-top">
+                                                    <span class="p-float-label">
+                                                        <input type="text" name="_addressline2" pInputText
+                                                            [(ngModel)]="obj.address2" required>
+                                                        <label for="_addressline2">Address Line 2<span
+                                                                class="form-mandatory-field">*</span></label>
+                                                    </span>
+                                                    <span style="font-size: 12px;">Area, Colony, Street name </span>
+                                                </div>
+                                                <div #field33 class="p-field p-col-12 p-md-12 p-lg-4 no-pad-top">
+                                                    <span class="p-float-label">
+                                                        <input type="text" name="_landmark" pInputText
+                                                            [(ngModel)]="obj.landmark">
+                                                        <label for="_landmark">Landmark</label>
+                                                    </span>
+                                                    <span style="font-size: 12px;">eg: </span>
+                                                </div>
+                                                <div #insiderow1 class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                                                    <div #grid1 class="p-grid">
+                                                        <div #field34 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label p-input-icon-right">
+                                                                <p-dropdown name="_district" [options]="districtOptions"
+                                                                    (onClick)="onSelect('DT')"
+                                                                    (onChange)="refreshFields('D')"
+                                                                    [(ngModel)]="obj.distrctCode" required>
+                                                                </p-dropdown>
+                                                                <label for="_district">District<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field35 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label p-input-icon-right">
+                                                                <p-dropdown name="_taluk" [options]="talukOptions"
+                                                                    (onClick)="onSelect('TK')"
+                                                                    [(ngModel)]="obj.talukCode" required>
+                                                                </p-dropdown>
+                                                                <label for="_taluk">Taluk<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div #grid2 class="p-grid">
+                                                        <div #field36 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_village" pInputText
+                                                                    [(ngModel)]="obj.village" size="25">
+                                                                <label for="_village">Village</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field37 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_pincode" pInputText
+                                                                    [(ngModel)]="obj.pincode" appInputFormat="digitOnly"
+                                                                    minlength="6" maxlength="6" required>
+                                                                <label for="_pincode">Pincode<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main7 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Identification Details
+                                            </div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid div-main">
+                                                    <div #field38 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_aadharno" pInputText
+                                                                [(ngModel)]="aadharNo" appInputFormat="digitOnly"
+                                                                (input)="validateAadhaar(aadharNo)" minlength="12"
+                                                                maxlength="12" required>
+                                                            <label for="_aadharno">Aadhar No<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                        <div style="font-size: 13px;color: red;">
+                                                            {{aadharValidationMsg}}</div>
+                                                    </div>
+                                                    <div #field39 class="p-field p-col-12 p-md-12 p-lg-3">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_rationcardno" pInputText
+                                                                [(ngModel)]="obj.rationCardrNo" required>
+                                                            <label for="_rationcardno">Ration Card No<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div #main8 class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-1"></div>
+                                        <div class="p-col-12 p-md-12 p-lg-10 card border-blue">
+                                            <div class="div-header" style="font-weight: 500;">Bank Details</div>
+                                            <div #row1 class="p-col-12 border-blue">
+                                                <div #grid1 class="p-grid  div-main">
+                                                    <div #field40 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_bankname" pInputText
+                                                                [(ngModel)]="obj.bankName" required>
+                                                            <label for="_bankname">Bank Name<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field41 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_bankaccno" pInputText
+                                                                [(ngModel)]="obj.bankAccNo" appInputFormat="digitOnly"
+                                                                required>
+                                                            <label for="_bankaccno">Bank Account No<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field42 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_ifsccode" pInputText
+                                                                [(ngModel)]="obj.ifscCode" required>
+                                                            <label for="_ifsccode">IFSC Code<span
+                                                                    class="form-mandatory-field">*</span></label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field43 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_branchname" pInputText
+                                                                [(ngModel)]="obj.branchName">
+                                                            <label for="_branchname">Branch Name</label>
+                                                        </span>
+                                                    </div>
+                                                    <div #field44 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                        <span class="p-float-label">
+                                                            <input type="text" name="_micrno" pInputText
+                                                                [(ngModel)]="obj.micrNo" appInputFormat="digitOnly">
+                                                            <label for="_micrno">MICR No.</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-tabPanel>
+                                <p-tabPanel header="Parent's Info">
+                                    <div class="p-col-12 p-md-12 p-lg-12 card border-blue">
+                                        <div #main1 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Father Details </div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid div-main">
+                                                        <div #field45 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fathername" id="fname"
+                                                                    pInputText [(ngModel)]="obj.fatherName">
+                                                                <label for="_fathername">Father Name</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field46 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fatheroccupation" pInputText
+                                                                    [(ngModel)]="obj.fatherOccupation">
+                                                                <label for="_fatheroccupation">Occupation</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field47 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fathereducation" pInputText
+                                                                    [(ngModel)]="obj.fatherQualification">
+                                                                <label for="_fathereducation">Qualification</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field48 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fathermobno" pInputText
+                                                                    [(ngModel)]="obj.fatherMoileNo"
+                                                                    appInputFormat="digitOnly" maxlength="10"
+                                                                    minlength="10">
+                                                                <label for="_fathermobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                        <!-- <div #field49 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_fatherincome" pInputText
+                                                                    [(ngModel)]="obj.fatherYIncome"
+                                                                    appInputFormat="digitOnly" required>
+                                                                <label for="_fatherincome">Yearly Income<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div #main2 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Mother Details </div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid div-main">
+                                                        <div #field50 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_mothername" id="fname"
+                                                                    pInputText [(ngModel)]="obj.motherName">
+                                                                <label for="_mothername">Mother Name</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field51 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_motheroccupation" id="fname"
+                                                                    pInputText [(ngModel)]="obj.motherOccupation">
+                                                                <label for="_motheroccupation">Occupation</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field52 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_mothereducation" id="fname"
+                                                                    pInputText [(ngModel)]="obj.motherQualification">
+                                                                <label for="_mothereducation">Qualification</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field53 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_mothermobno" id="fname"
+                                                                    pInputText [(ngModel)]="obj.motherMoileNo"
+                                                                    minlength="10" maxlength="10"
+                                                                    appInputFormat="digitOnly">
+                                                                <label for="_mothermobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                        <!-- <div #field54 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_motherincome" pInputText
+                                                                    [(ngModel)]="obj.motherYIncome"
+                                                                    appInputFormat="digitOnly" required>
+                                                                <label for="_motherincome">Yearly Income<span
+                                                                        class="form-mandatory-field">*</span></label>
+                                                            </span>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div #main3 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Guardian Details
+                                                </div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid div-main">
+                                                        <div #field55 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianname" id="fname"
+                                                                    pInputText [(ngModel)]="obj.guardianName">
+                                                                <label for="_guardianname">Guardian Name</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field56 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianoccupation" id="fname"
+                                                                    pInputText [(ngModel)]="obj.guardianOccupation">
+                                                                <label for="_guardianoccupation">Occupation</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field57 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianeducation" id="fname"
+                                                                    pInputText [(ngModel)]="obj.guardianQualification">
+                                                                <label for="_guardianeducation">Qualification</label>
+                                                            </span>
+                                                        </div>
+                                                        <div #field58 class="p-field p-col-12 p-md-12 p-lg-2">
+                                                            <span class="p-float-label">
+                                                                <input type="text" name="_guardianmobno" id="fname"
+                                                                    pInputText [(ngModel)]="obj.guardianMobileNo"
+                                                                    appInputFormat="digitOnly" maxlength="10"
+                                                                    minlength="10">
+                                                                <label for="_guardianmobno">Mobile No</label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-tabPanel>
+                                <p-tabPanel header="Document Upload">
+                                    <div class="p-col-12 p-md-12 p-lg-12 card border-blue">
+                                        <div #main1 class="p-grid">
+                                            <div class="p-col-1"></div>
+                                            <div class="p-col-12 p-md-12 p-lg-10">
+                                                <div class="div-header" style="font-weight: 500;">Proofs and
+                                                    Certificates</div>
+                                                <div #row1 class="p-col-12 border-blue">
+                                                    <div #grid1 class="p-grid">
+                                                        <div #field59 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_incomecertificate">Income Certificate</label>
+                                                            <input #incomeCertificate class="p-col-12"
+                                                                name="_incomecertificate" type="file" pInputText
+                                                                (change)="onFileUpload($event, 2)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                        </div>
+                                                        <div #field60 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_transfercertificate">TC/Bonafide</label>
+                                                            <input #transferCertificate class="p-col-12"
+                                                                name="_transfercertificate" type="file" pInputText
+                                                                (change)="onFileUpload($event, 3)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                        </div>
+                                                    </div>
+                                                    <div #grid2 class="p-grid">
+                                                        <div #field61 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_bankpassbook">Bank Passbook</label>
+                                                            <input #bankPassBook class="p-col-12" name="_bankpassbook"
+                                                                type="file" pInputText
+                                                                (change)="onFileUpload($event, 4)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                        </div>
+                                                        <div #field62 class="p-field p-col-12 p-md-12 p-lg-4">
+                                                            <label for="_declarationform">Declaration Form</label>
+                                                            <input #declarationForm class="p-col-12"
+                                                                name="_declarationform" type="file" pInputText
+                                                                (change)="onFileUpload($event, 5)"
+                                                                accept=".pdf,.png,.jpg,.jpeg" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-tabPanel>
+                                <div class="p-col-12 txt-center">
+                                    <button pButton type="button" label="Submit" icon="pi pi-send" (click)="onSubmit()"
+                                        [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="onView()"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="clearForm()"></button>
+                                </div>
+                            </p-tabView>
+                        </div>
+                    </form>
+                </p-card>
+            </p-panel>
+            <p-dialog #dialog *ngIf="showDialog" header="Registered Student List" [(visible)]="showDialog"
+                [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+                <div class="p-grid div-main">
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-table #dt styleClass="p-datatable-gridlines" [columns]="registeredCols"
+                            [value]="registeredDetails" [paginator]="true" [rows]="10" [loading]="loading"
+                            [filterDelay]="0" [globalFilterFields]="['studentName', 'aadharNo']">
+                            <ng-template pTemplate="caption">
+                                <div class="table-header">
+                                    <div class="p-grid">
+                                        <div class="p-col-6 p-md-6 p-lg-10 txt-end">
+                                            <span>Search by Student name / Aadhar No.</span>
+                                        </div>
+                                        <div class="p-col-4 p-md-4 p-lg-2">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" size="30"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Global Search" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 100px">S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th style="width: 120px">Edit</th>
+                                    <!-- <th style="width: 120px">Delete</th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onEdit(rowData, rowIndex)">
+                                        <span class="p-column-title">
+                                            Edit :
+                                        </span>
+                                        <span>
+                                            <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                            </button></span>
+                                    </td>
+                                    <!-- <td style="width: 120px" (click)="onDelete(rowData, rowIndex)">
+                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
+                                    </button>
+                                </td> -->
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </p-dialog>
+        </div>
+        <div class="p-col-1"></div>
+    </div>
+</block-ui>

@@ -1,0 +1,219 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Consumption">
+                <form #f="ngForm" name="consumptionForm">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_date">Date<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true"
+                                                name="_date" (ngModelChange)="loadStudentCount()" [maxDate]="maxDate"></p-calendar>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-3 no-pad-left">
+                                            <div><label for="_consumption">Consumption For<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_consumption" [options]="consumptionOptions"
+                                                (onClick)="onSelect('CF')" [(ngModel)]="consumption" optionLabel="label"
+                                                required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                            <div><label for="_commodity">Commodity<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_commodity" [filter]="true" filterBy="label" [showClear]="true"
+                                             [options]="commodityOptions" (onClick)="onSelect('CM')" [(ngModel)]="commodity" optionLabel="label"
+                                                (ngModelChange)="loadOB()" required>
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="country-item country-item-value"  *ngIf="commodity">
+                                                        <div>{{commodity.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-item pTemplate="item">
+                                                    <div class="commodity-item">
+                                                        <div>{{item.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-1 no-pad-left">
+                                            <div><label for="_unit">Unit<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_unit" [options]="unitOptions"
+                                                (onClick)="onSelect('UN')" [(ngModel)]="unit" optionLabel="label"
+                                                required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_noofstudentpresent">No.Of Students Present<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" name="_noofstudentpresent" pInputText
+                                                        [(ngModel)]="studentCount" [readonly]="true">
+                                                        <!-- readonly="true" -->
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_openingbalance">Opening Balance(Today)<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" name="_openingbalance" pInputText
+                                                        [(ngModel)]="openingBalance" readonly="true" required>
+                                                        <!-- readonly="true" -->
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                    <label for="_requiredqty">Required Quantity<span
+                                                            class="form-mandatory-field">*</span></label>
+                                                    <input type="text" name="_requiredqty" pInputText
+                                                        (input)="calculateBalance()" [(ngModel)]="requiredQty"
+                                                        [readonly]="disableReqQty" required>
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div><label for="_closingbalance">Closing Balance</label></div>
+                                                    <input type="text" name="_closingbalance" pInputText
+                                                        [(ngModel)]="closingBalance" readonly="true">
+                                                </div>
+                                                <div class="p-col-12 p-md-7 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
+                                                [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
+                                                    <button pButton type="button" label="Enter" [disabled]="(!f.valid || openingBalance==0)"
+                                                        (click)="onEnter()"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-col-12"></div>
+                            <div class="p-grid">
+                                <div class="p-col-1"></div>
+                                <div #row2 class="p-col-12 p-md-12 p-lg-10">
+                                    <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols"
+                                        [value]="consumptionData" [paginator]="true" [rows]="10">
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th style="width: 100px">S.No</th>
+                                                <th *ngFor="let col of columns">
+                                                    {{col.header}}
+                                                </th>
+                                                <th style="width: 120px">Edit</th>
+                                                <th style="width: 120px">Delete</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData
+                                            let-columns="columns">
+                                            <tr>
+                                                <td style="width: 100px">{{rowIndex+1}}</td>
+                                                <td *ngFor="let col of columns" [style.text-align]="col.align">
+                                                    {{rowData[col.field]}}
+                                                </td>
+                                                <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 1)">
+                                                    <button style="height: 1.8rem;"  pButton
+                                                        type="button" icon="pi pi-pencil">
+                                                    </button>
+                                                </td>
+                                                <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 1)">
+                                                    <button style="height: 1.8rem;" icon="pi pi-trash" pButton
+                                                        type="button">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                            <div #row3 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
+                                        [disabled]="(consumptionData.length==0)"></button>&nbsp;
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="onView()"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="onClearAll()"></button>
+                            </div>
+                        </div>
+                    </p-card>
+                </form>
+            </p-panel>
+            <p-dialog #dialog header="Consumption Details" [(visible)]="showDialog" [modal]="showDialog"
+               [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+                <div class="p-grid div-main">
+                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                        <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"  [maxDate]="maxDate"
+                            (ngModelChange)="onDateSelect()" name="_fdate"></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                        <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true"  [maxDate]="maxDate"
+                            (ngModelChange)="onDateSelect()" name="_tdate"></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-table styleClass="p-datatable-gridlines" [columns]="consumptionCols" [value]="consumedList"
+                            [paginator]="true" [rows]="10" [loading]="loading">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 100px">S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th style="width: 120px">Edit</th>
+                                    <th style="width: 120px">Delete</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 2)">
+                                        <span class="p-column-title">
+                                            Edit :
+                                        </span>
+                                        <span>
+                                        <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                        </button>
+                                    </span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 2)">
+                                        <span class="p-column-title">
+                                            Delete :
+                                        </span>
+                                        <span>
+                                        <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
+                                        </button></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <p-confirmDialog #cd [style]="{width: '50vw'}" [appendTo]="dialog">
+                    <ng-template pTemplate="header">
+                      <span>Alert</span>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                      <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                      <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                  </ng-template>
+                  </p-confirmDialog>
+            </p-dialog>
+        </div>
+    </div>
+</block-ui>

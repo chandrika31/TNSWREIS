@@ -1,0 +1,38 @@
+<div *ngIf="!hideHeader" class="p-col-12 p-md-12 p-lg-12 menu-header no-padding">
+    <div class="p-col-12 p-md-12 p-lg-12 no-pad-lt">
+        <mat-toolbar color="primary">
+            <div *ngIf="showMenu" (click)="onToggleSidenav()" fxHide.gt-xs>
+                <span style="float: left;">
+                    <i class="pi pi-bars" style="color: whitesmoke;"></i>
+                </span>
+            </div>
+            <div fxLayoutAlign="center center" fxLayoutGap="5px">
+                <img src="assets/layout/images/TN_Govt_Logo.png" class="menu-logo">
+                <span class="txt-shadow-teal" style="color: whitesmoke; font-size: 18px;">TN-ADWHMS </span>
+            </div>
+            <div *ngIf="!showMenu" fxFlex="66%" fxLayout fxFlexFill fxLayoutAlign="center center" fxHide.xs fxHide.sm>
+                <div class="txt-center" style="color: whitesmoke;font-size:20px;"
+                    [ngStyle.lt-md]="{'font-size': '16px'}">
+                    &nbsp; <span>Government Of Tamilnadu - ADW Hostel Management</span>
+                </div>
+            </div>
+            <div *ngIf="showMenu" fxFlex fxLayout fxLayoutAlign="end end" fxHide.xs>
+                <p-menubar [model]="items"></p-menubar>
+            </div>
+            <div *ngIf="!showMenu" fxFlex fxLayout fxFlexFill fxLayoutAlign="end end">
+                <button pButton type="button" label="Login" icon="pi pi-sign-in" (click)="onSignIn()"></button>
+            </div>
+            <div *ngIf="showMenu" style="color: whitesmoke; text-align: center !important; margin-left: 5px;"
+            [ngStyle.xs]="{'margin-left': '35%'}">
+                <i class="fa fa-user-circle-o" style="font-size:2.5rem;" pTooltip="user info" tooltipPosition="top" (click)="op.toggle($event)"></i><br/>
+            </div>
+        </mat-toolbar>
+        <p-overlayPanel #op>
+            <ng-template pTemplate>
+                <div style="text-align: center !important; text-shadow: 0.5px 0.5px #5dddd8 !important; color: #48aeb5;">{{officeType}}</div>
+                <span style="font-size: 13px;">Username: <span style="color: #08747b; font-size: 14px !important;">{{username}} </span></span><br/>
+                <span *ngIf="roleId != 1" style="font-size: 13px;">{{placeType}}: <span style="color: #08747b; font-size: 14px !important;">{{place}}</span></span>
+            </ng-template>
+        </p-overlayPanel>
+    </div>
+</div>

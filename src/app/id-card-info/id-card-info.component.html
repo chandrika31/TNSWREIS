@@ -1,0 +1,110 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="ID Card">
+        <p-card>
+            <div class="p-col-12 no-pad-top">
+                <div class="p-grid">
+                    <div class="p-col-2"></div>
+                    <div class="p-col-12 p-md-12 p-lg-10 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_district">District<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                    (onClick)="onSelect('D')" (onChange)="selectDistrict()" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_taluk">Taluk<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                    (onClick)="onSelect('T')" (onChange)="selectDistrict()" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <div><label for="_hostel">Hostel Name<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName"
+                                    (onClick)="onSelect('HN')"  (onChange)="loadStudents()" required>
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-2">
+                                <div><label for="_studentname">Student Name<span
+                                            class="form-mandatory-field">*</span></label></div>
+                                <p-dropdown name="_studentname" [options]="studentOptions"
+                                 [(ngModel)]="studentName"  (onClick)="onSelect('SN')"
+                                  (onChange)="fillDetails()"   required>
+                                </p-dropdown>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+            </div>
+        </p-card>
+   
+<div class="p-col-12"></div>
+                <div *ngIf="Show" class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12 p-lg-2"></div>
+                        <div class="p-col-12 p-md-10 p-lg-6">
+                            <p-card>
+                                <p style="text-align: center; font-weight: 600;">ID CARD INFO</p>
+                                <div style="text-align: center;">
+                                    <div> <img [src]="userImage" style="width: 100px; height: 100px;" /></div>
+                                    <div style="font-weight: bold;">{{name}}</div>
+                                    <div>{{class}}</div>
+                                </div>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>EMIS No: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{emisNo}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Date of Birth: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{dob | date:'dd/MM/yyyy'}} </div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Blood Group: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{bloodGroup}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Medium: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{medium}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Mobile no: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{contactNo}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Emergency Contact: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{contactNo}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Guardian(if any): </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6">{{guardianMobileNo}}</div>
+                                </div>
+                                <hr>
+                                <div class="p-grid">
+                                    <div class="p-col-2"></div>
+                                    <div class="p-col-4 p-md-4 p-lg-4"><b>Address: </b></div>
+                                    <div class="p-col-6 p-md-6 p-lg-6"> {{address}}</div>
+                                </div>
+                            </p-card>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+           

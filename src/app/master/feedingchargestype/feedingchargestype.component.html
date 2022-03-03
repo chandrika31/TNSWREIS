@@ -1,0 +1,118 @@
+<block-ui>
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Feeding Charges Type">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <form #f="ngForm" name="FeedingCharges Type">
+                        <p-card>
+
+                            <div class="p-grid">
+
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_accountingyear">Accounting Year<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <p-dropdown name="_accountingyear" [options]="AccountingyearOptions"
+                                        [(ngModel)]="Accountingyear" (onClick)="onSelect('AY')" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_feedingcharge">FeedingChargesType<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <p-dropdown name="_feedingcharge" [options]="feedingchargeOptions"
+                                        [(ngModel)]="feedingcharge" (onClick)="onSelect('FC')" required>
+                                    </p-dropdown>
+                                </div>
+
+
+
+
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_school">Amount For School<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <input type="text" pInputText [(ngModel)]="School" name="_School" required />
+                                </div>
+
+                                <div class="p-col-12 p-md-6 p-lg-3"></div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_College">Amount For College<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <input type="text" pInputText [(ngModel)]="College" name="_College" required />
+                                </div>
+
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
+                                    <p-radioButton name="Flag" label="ACTIVE" value=1 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 23px;">
+                                    <p-radioButton name="Flag" label="INACTIVE" value=0 [(ngModel)]="selectedType"
+                                        required>
+                                    </p-radioButton>
+                                </div>
+
+
+
+                                <div class="p-col-12 p-md-6 p-lg-12 txt-center">
+                                    <button pButton name="save" type="button" label="Submit" icon="pi pi-save"
+                                        (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>&nbsp;
+
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="onview()"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="onClear()"></button>
+
+                                </div>
+                            </div>
+                            <div *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
+                                <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                                    [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                                    styleClass="p-datatable-gridlines">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th *ngFor="let col of columns">
+                                                {{col.header}}
+                                            </th>
+
+                                        </tr>
+                                    </ng-template>
+
+
+                                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex"
+                                        let-columns="columns">
+                                        <tr [pSelectableRow]="rowData" class=" tr-border cursor-pointer"
+                                            (dblclick)="onRowSelect($event, rowData)">
+                                            <td class="td-border">
+                                                <span class="p-column-title">
+                                                    S.No :
+                                                </span>
+                                                <span style="text-align: end;">
+                                                    {{rowIndex+1}}
+                                                </span>
+                                            </td>
+                                            <td *ngFor="let col of columns" [style.text-align]="col.align"
+                                                class="td-border">
+                                                <span class="p-column-title">
+                                                    {{col.header}} :
+                                                </span>
+                                                <span style="text-align: end;"> {{rowData[col.field]}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </p-card>
+                    </form>
+                </div>
+            </div>
+        </p-panel>
+    </div>
+</block-ui>

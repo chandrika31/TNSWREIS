@@ -1,0 +1,36 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Hostel Events Image Upload">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                <div><label for="_year">Accounting Year<span class="form-mandatory-field">*</span></label></div>
+                <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')" [(ngModel)]="year" required>
+                </p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-12 p-lg-3">
+                <div><label>Image Title<span class="form-mandatory-field">*</span></label></div>
+                <input class="p-col-12" type="text" name="_title" pInputText [(ngModel)]="title"
+                    appInputFormat="noSpecialChars" style="text-transform: capitalize;" required />
+            </div>
+            <div class="p-col-12 p-md-10 p-lg-6">
+                <div class="p-col-12 p-md-12 p-lg-2 no-pad-top">
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <div><label for="_year">Picture Panel<span class="form-mandatory-field">*</span>
+                            </label></div>
+                        <div><img [src]="Hostelactivityimages" style="width: 200px; height: 200px;" />
+                            <input style="display: none;border-width: 2px;" name="_HostelImg" type="file"
+                                (change)="uploadFile($event)" #userFile>
+                            <button class="b-size" style="margin: 0 !important;" icon="pi pi-plus edit-size" pButton
+                                type="file" #file (click)="userFile.click()">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-12 p-lg-12 txt-right">
+                    <button pButton type="button" label="Save File" icon="pi pi-save" (click)="onSubmit()">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</div>

@@ -1,0 +1,56 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Attendance List">
+                <p-card>
+                    <form #f="ngForm" name="auditForm">
+                        <div #row1 class="p-col-12 p-md-12 p-lg-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_districtname">District Name</label>
+                                    <input type="text" name="_districtname" pInputText [(ngModel)]="districtName"
+                                         />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_talukname">Taluk Name</label>
+                                    <input type="text" name="_talukname" pInputText [(ngModel)]="talukName"
+                                         />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <label for="_hostelname">Hostel Name</label>
+                                    <input type="text" name="_hostelname" pInputText [(ngModel)]="hostelName"
+                                         />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_date"> Attendance Date</label></div>
+                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="attendanceDate"
+                                        name="_date" [showIcon]="true" [maxDate]="maxDate" (onSelect)="GetAttendanceInfo()" required>
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                <label for="_noofstud">Number of Student<span
+                                    class="form-mandatory-field">*</span></label>
+                                <input type="text" name="_noofstud" [(ngModel)]="noOfStudent" pInputText
+                                   [readonly]="disableFields" (click)="Displaymessage()" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_Remarks">Remarks</label>
+                                    <input type="text" name="remarks"  [readonly]="disableFields" [(ngModel)]="remarks" pInputText required />
+                                </div>
+                             </div> 
+                        </div>
+                        <div #row2 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                            <button pButton type="button" label="Submit" (click)="onSubmit()"
+                                [disabled]="((!f.valid) || disableFields)" class="btn-bg"></button>&nbsp;
+                            <button pButton type="button" label="Clear" 
+                                icon="pi pi-times-circle" (click)="onClear()"></button>
+                        </div>
+
+                    </form>
+                </p-card>
+            </p-panel>
+        </div>
+    </div>
+</block-ui>

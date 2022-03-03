@@ -1,0 +1,201 @@
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Warden Registration">
+                <form #f="ngForm" name="wardenDetails">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top" style="margin-left: -8px;">
+                            <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_wardenname">Warden Name<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" name="_wardenname" class="p-col-12" pInputText
+                                            [(ngModel)]="wardenName" style="text-transform: capitalize;" appInputFormat="noSpecialChars" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label for="_gender">Gender<span class="form-mandatory-field">*</span></label>
+                                        <p-dropdown name="_gender" [options]="genderOptions" (onClick)="onSelect('GD')"
+                                            [(ngModel)]="gender" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_dob">Date of Birth<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="dob" name="_dob" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                                            inputId="dateofbirth"  required></p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_qualification">Qualification<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-dropdown name="_qualification" [options]="qualificationOptions"
+                                            [(ngModel)]="qualification" (onClick)="onSelect('CU')" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_doj">Service Joined Date<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="servicedoj" name="_doj" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="{{yearRange}}"
+                                            inputId="dateofjoin"  required></p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_designation">Designation<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" class="p-col-12" name="_designation" pInputText
+                                            [(ngModel)]="designation" appInputFormat="noSpecialChars" required />
+                                    </div>
+                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left"><label
+                                                    for="_district">Hostel District<span
+                                                        class="form-mandatory-field">*</span></label>
+                                                <p-dropdown name="_district" [options]="districtOptions"
+                                                    [(ngModel)]="district" (onClick)="onSelect('D')"
+                                                    (onChange)="selectDistrict()" required>
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_hostelname">Hostel Name<span
+                                                        class="form-mandatory-field">*</span></label>
+                                                <p-dropdown name="_hostelname" [options]="hostelOptions"
+                                                    [(ngModel)]="hostelName" (click)="onSelect('HN')" required>
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_hstljoindate">Joined as warden in<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="hostelJoin" name="_hstljoindate"
+                                                    [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+                                                    yearRange="{{yearRange}}" inputId="hosteljoindate" required>
+                                                </p-calendar>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_email">Email Id<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="email" class="p-col-12" name="_email" pInputText
+                                                    [(ngModel)]="email" (input)="validateEmail()" required />
+                                                    <span class="form-mandatory-field" *ngIf="isValidEmail">Please enter valid email.</span>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_mobno">Mobile Number<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" class="p-col-12" name="_mobno" pInputText
+                                                    [(ngModel)]="mobNo" minlength="10" maxlength="10" appInputFormat="digitOnly" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_altmobno">Alternate Mobile No.</label></div>
+                                                <input type="text" class="p-col-12" name="_altmobno" pInputText
+                                                    [(ngModel)]="altMobNo" minlength="10" maxlength="10" appInputFormat="digitOnly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_address1">Address Line 1<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input class="p-col-12" name="_address1" pInputText
+                                                    [(ngModel)]="addressOne" placeholder="Door No./Area/Street name"
+                                                    required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_address2">Address Line 2<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input class="p-col-12" name="_address2" pInputText
+                                                    [(ngModel)]="addressTwo" placeholder="Village/City name" style="text-transform: capitalize;" required />
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_nativedistrict">Native District<span
+                                                        class="form-mandatory-field">*</span> </label>
+                                                <p-dropdown [options]="nativeDistrictOptions" [(ngModel)]="nativeDistrict"
+                                                    (onClick)="onSelect('ND')" (onChange)="refreshTaluk()" name="_nativedistrict" required>
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                <label for="_taluk">Native Taluk<span
+                                                        class="form-mandatory-field">*</span> </label>
+                                                <p-dropdown [options]="talukOptions" [(ngModel)]="taluk"
+                                                     (onClick)="onSelect('T')" name="_taluk">
+                                                </p-dropdown>
+                                            </div>
+                                            <div class="p-col-12 p-md-6 p-lg-2">
+                                                <div><label for="_pincode">Pincode</label><span
+                                                        class="form-mandatory-field">*</span></div>
+                                                <input type="text" class="p-col-12" name="_pincode" pInputText
+                                                    [(ngModel)]="pincode" minlength="6" maxlength="6" appInputFormat="digitOnly" required />
+                                            </div>
+                                            <div #row3 class="p-col-12 p-md-12 p-lg-12">
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-6 p-lg-4">
+                                                        <div><img [src]="wardenImage"
+                                                                style="width: 110px; height: 110px;" />
+                                                            <input style="display: none" name="_wardenimage" type="file" #userFile
+                                                                (change)="uploadFile($event)" required />
+                                                            <button class="b-size" icon="pi pi-plus edit-size" pTooltip="Click to add photo" pButton
+                                                                type="file" #file (click)="userFile.click()">
+                                                            </button>
+                                                            <div>Upload Warden Image<span
+                                                                    class="form-mandatory-field">*</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-col-12 txt-center">
+                                                        <button pButton type="button" label="Save" icon="pi pi-save"
+                                                            (click)="onSave()" [disabled]="(!f.valid || !f.dirty || disableSave)"></button>&nbsp;
+                                                        <button pButton type="button" label="View" icon="pi pi-eye"
+                                                            (click)="onView()"></button>&nbsp;
+                                                        <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                                            (click)="onClear()"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="showTable">
+                            <p-table [value]="data" [columns]="cols" styleClass="p-datatable-gridlines"
+                                [paginator]="true" [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 50px;">S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                        <th>Edit/Update</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="p-column-title">
+                                                Edit/Update :
+                                            </span>
+                                        <span><button icon="pi pi-pencil" pButton type="button"  pTooltip="Tap to edit" (click)="onEdit(rowData)">
+                                            </button></span></td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-card>
+                </form>
+            </p-panel>
+        </div>
+    </div>

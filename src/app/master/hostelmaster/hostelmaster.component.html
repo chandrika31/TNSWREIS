@@ -1,0 +1,185 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Hostel Master">
+                <p-card>
+                    <form #f="ngForm" name="hostelmasterForm">
+                        <div class="p-col-12 p-md-12 p-lg-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_Hosteltype">Hostel Type</label></div>
+                                    <p-dropdown name="_Hosteltype" [options]="HosteltypeOptions"
+                                        [(ngModel)]="Hosteltype" (onClick)="onSelect('HT')"
+                                        required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_Functioningtype">Hostel Functioning Type</label></div>
+                                    <p-dropdown name="_Functioningtype" [options]="FunctioningtypeOptions"
+                                        [(ngModel)]="Functioningtype" (onClick)="onSelect('HF')"
+                                        [disabled]="disableFields" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_Districtcode">District</label>
+                                    <p-dropdown name="_Districtcode" [options]="DistrictcodeOptions"
+                                        [(ngModel)]="Districtcode" (onClick)="onSelect('DT')"
+                                        [disabled]="disableFields" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_TalukId">Taluk</label>
+                                    <p-dropdown name="_TalukId"  [options]="TalukIdOptions"
+                                         [(ngModel)]="TalukId" (onClick)="onSelect('TK')"
+                                        [disabled]="disableFields" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_hostelname">Hostelname<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_hostelname" class="p-col-10" pInputText
+                                    [disabled]="disableFields" [(ngModel)]="Hostelname" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_hosteltamilname">Hostel Name Tamil<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_hosteltamilname" class="p-col-10" pInputText
+                                    [disabled]="disableFields"  [(ngModel)]="Hosteltamilname" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_hostelopendate">Hostel Opening Date<span
+                                        class="form-mandatory-field">*</span></label>
+                                        <p-calendar [showOtherMonths]="false" [(ngModel)]="hostelOpeningDate"  
+                                        [disabled]="disableFields" [showIcon]="true" name="_hostelopendate" required>
+                                        </p-calendar>
+                            </div>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_mobno">Mobile Number<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_mobno" pInputText minlength="10"
+                                        maxlength="10" [(ngModel)]="mobileNo" appInputFormat="digitOnly" required />
+                                        
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
+                                    <div><label for="_Totalstudent">Total Student<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_Totalstudent" class="p-col-10" pInputText
+                                        [(ngModel)]="Totalstudent"  appInputFormat="digitOnly" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
+                                    <div><label for="_Buildingno">Buildingno<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_Buildingno" class="p-col-10" pInputText
+                                        [(ngModel)]="Buildingno" required />
+                                </div>
+
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_Street">Street<span class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_Street" class="p-col-10" pInputText [(ngModel)]="Street"
+                                        required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_Landmark">Nearest Landmark<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_Landmark" class="p-col-10" pInputText
+                                        [(ngModel)]="Landmark" required />
+                                </div>
+                            
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <div><label for="_policestation">Nearby PoliceStation Address <span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_policestation" pInputText  [(ngModel)]="policeStationAddress" appInputFormat="noSpecialChars" required />
+                                        
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1">
+                                    <div><label for="_pincode">Postal Code<span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" name="_pincode" type="text" pInputText minlength="6"
+                                        maxlength="6" [(ngModel)]="pincode" appInputFormat="digitOnly" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3">
+                                    <div><label for="_nearestphc">Nearest PHC (Primary Health Centre) <span
+                                                class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input class="p-col-12" type="text" name="_nearestphc" 
+                                    pInputText  [(ngModel)]="nearestPhc" appInputFormat="noSpecialChars" required />
+                                        
+                                </div>
+                            
+                                <div class="p-col-12 txt-center">
+                                    <button pButton type="button" label="Submit" (click)="onSubmit()" 
+                                    [disabled]="((disableFields && (!f.dirty || !f.valid)) || (!disableFields && !f.valid))"  class="btn-bg"></button>&nbsp;
+                                        <!-- <button pButton type="button" label="View" (click)="onView()" 
+                                        class="btn-bg"></button> -->
+                                </div>
+                          <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                          [rowsPerPageOptions]="[5,10,15,20]"  totalRecords="totalRecords" pageLinks="3"
+                          [globalFilterFields]="['Name','HostelNameTamil','HostelName']">
+                          <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <span class="p-input-icon-left p-ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                                </span>
+                            </div>
+                            </ng-template>
+                          <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 90px;">S.No:</th>
+                              <th *ngFor="let col of columns" [style.width]="col.width">
+                                {{col.header}}
+                              </th>
+                              <th style="width: 50px;">Image</th>
+                              <th style="width: 50px;">Edit/Update</th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                            <tr [pSelectableRow]="rowData" class="tr-border cursor">
+                              <td class="td-border"> 
+                                  <span class="p-column-title">
+                                S.No :
+                            </span>
+                            <span style="text-align: end;">
+                                {{rowIndex+1}}
+                            </span></td>
+                              <td *ngFor="let col of columns" class="td-border">
+                                <span class="p-column-title">
+                                    {{col.header}} :
+                                </span>
+                                <span style="text-align: end;"> {{rowData[col.field]}}
+                                </span>
+                              </td>
+                              <td (click)="showImage(rowData.url)">
+                                <span class="p-column-title">Image :</span> <span><img alt="TN ADW Hostel image" [src]="rowData.url" width="32"
+                                    style="vertical-align: middle" /></span>
+                            </td>
+                            <td>
+                            <span class="p-column-title">Edit/Update :</span> <span> <button style="height: 1.8rem;" (click)="onRowSelect($event, rowData)"
+                                     icon="pi pi-pencil" pButton type="button">
+                                    </button></span>
+                            </td>
+                            </tr>
+                          </ng-template>
+                        </p-table>
+                            </div>
+                        </div>
+                    </form>
+                </p-card>
+
+            </p-panel>
+            <p-dialog #dialog header="Hostel Image" [(visible)]="showDialog" [modal]="showDialog" [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+                <img alt="TN ADW Hostel image" [src]="hostelImage" style="vertical-align: middle" />
+            </p-dialog>
+        </div>
+    </div>
+

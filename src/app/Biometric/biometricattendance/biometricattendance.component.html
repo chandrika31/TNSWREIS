@@ -1,0 +1,145 @@
+<div class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <p-panel header="Biometric Attendance Details">
+        <p-card>
+          <form #f="ngForm" name="Biometricattendance Details">
+            <div class="p-grid">  
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-lg-1"></div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_district">District</label>
+                            </div>
+                            <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                (onClick)="onSelect('D')" (ngModelChange)="refreshFields('D')" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_taluk">Taluk</label>
+                            </div>
+                            <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                (onClick)="onSelect('T')" (onChange)="refreshFields('T')" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="_hostel">Hostel Name</label>
+                            </div>
+                            <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostelName" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2">
+                            <div><label for="monthpicker">Month/Year</label></div>
+                            <p-calendar [(ngModel)]="MonthYear" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+                                inputId="monthpicker"></p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2" style="margin-top: 23px;">
+                            <button pButton type="button" label="View" icon="pi pi-eye"  [disabled]='(!f.valid || !f.dirty)' 
+                            (click)="onview()"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-col-12 p-md-6 p-lg-12">
+                  <div style="text-align: right;"> 
+                    <label style="color: yellowgreen;" label="Total Student 490" 
+                    pButton type="label"></label>&nbsp;
+                 
+                      <button pButton type="button" icon="pi pi-file-excel" label="Export" style="text-align: right;"
+                          style= "color: yellowgreen;"(click)="dt.exportCSV()"
+                          pTooltip="Excel-File download"></button>
+                  
+                </div>
+                <p-table #dt [columns]="biometricattendancecountCols" [value]="biometricattendancecountData" [paginator]="true" [rows]="100"
+                [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" 
+                styleClass="p-datatable-gridlines" exportFilename="Biometricattendancecount">
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th>S.No</th>
+                    <th *ngFor="let col of columns">
+                      {{col.header}}
+                    </th>
+                    <th> BreakUp Details </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                  <tr [pSelectableRow]="rowData" class=" tr-border ">
+                    <td class="td-border">
+                      <span class="p-column-title">
+                        S.No :
+                      </span>
+                      <span style="text-align: end;">
+                        {{rowIndex+1}}
+                      </span>
+                    </td>
+                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                      <span class="p-column-title">
+                        {{col.header}} :
+                      </span>
+                      <span style="text-align: end;"> {{rowData[col.field]}}
+                      </span>
+
+                    </td>
+                    
+                    <td>
+                      <span class="p-column-title">
+                        BreakUp Details
+                      </span>
+                      <span>
+                      <button style="height: 1.8rem;" 
+                      icon="pi pi-plus" (click)="onRowSelect($event, rowData)" pButton type="button">
+                     </button>
+                  </span>
+                  </td>
+
+                  </tr>
+                </ng-template>
+              </p-table> 
+                </div> 
+            </div>
+          </form>
+        </p-card>
+    </p-panel>
+    <p-dialog #dialog header="Biometric Attendance Report" [(visible)]="showDialog" [modal]="showDialog"
+               [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+
+               <div style="text-align: right;">
+                <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                    style="color: yellowgreen;" (click)="dt1.exportCSV()"
+                    pTooltip="Excel-File download"></button>
+            </div>
+
+               <p-table #dt1 [columns]="BMAttendanceReportCols" [value]="BMAttendanceData" [paginator]="true" [rows]="100"
+               [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
+               exportFilename="BMAttendance">
+               <ng-template pTemplate="header" let-columns>
+                   <tr>
+                       <th style="width: 45px;">S.No</th>
+                       <th *ngFor="let col of columns" [style.width]="col.width">
+                           {{col.header}}
+                       </th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                   <tr class="tr-border">
+                       <td class="td-border">
+                           <span class="p-column-title">
+                               S.No :
+                           </span>
+                           <span style="text-align: end;">
+                               {{rowIndex+1}}
+                           </span>
+                       </td>
+                       <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                           <span class="p-column-title">
+                               {{col.header}} :
+                           </span>
+                           <span style="text-align: end;"> {{rowData[col.field]}}
+                           </span>
+                       </td>
+                   </tr>
+               </ng-template>
+           </p-table>
+    </p-dialog>
+    </div>
+  
+

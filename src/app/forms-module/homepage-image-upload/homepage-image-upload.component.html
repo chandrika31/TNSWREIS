@@ -1,0 +1,131 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Home Page Image Upload">
+            <form #f="ngForm" name="homeImageUpload">
+                <p-card>
+                    <div class="p-col-12 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-2"></div>
+                            <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label>Date<span class="form-mandatory-field">*</span></label>
+                                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="date"
+                                            name="_date" [showIcon]="true" required></p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                                        <label>Image Title<span class="form-mandatory-field">*</span></label>
+                                        <input class="p-col-12" type="text" name="_title" pInputText [(ngModel)]="title"
+                                            appInputFormat="noSpecialChars" style="text-transform: capitalize;"
+                                            required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                        <label>Upload Image<span class="form-mandatory-field">*</span></label> 
+                                        <input class="p-col-12" type="file" name="_file" #file placeholder="Choose file"
+                                            pInputText (change)="uploadFile(file.files)" accept=".jpg,.png,.jpeg"
+                                            required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12"></div>
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSubmit()"
+                                    [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="showTable">
+                        <p-table [value]="homeImageData" styleClass="p-datatable-gridlines" [paginator]="true"
+                            [rows]="40" [rowsPerPageOptions]="[10,20,30,40]">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 50px;">S.No</th>
+                                    <th>Uploaded date</th>
+                                    <th>Image Title/Description</th>
+                                    <th>Image</th>
+                                    <th>Edit/Update</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            Uploaded date :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowData.UploadDate}}
+                                        </span>
+                                    </td>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            Image Title/Description :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowData.ImageTitle}}
+                                        </span>
+                                    </td>
+                                    <!-- <td class="td-border">
+                                            <span class="p-column-title">
+                                                Home Image :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowData.ImageFilename}}
+                                            </span>
+                                        </td> -->
+                                    <td (click)="showImage(rowData.url)">
+                                        <span class="p-column-title">
+                                            Image :
+                                        </span>
+                                        <span>
+                                            <img alt="Home image" [src]="rowData.url" width="32"
+                                                style="vertical-align: middle ;"  /></span>
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">
+                                            Edit/Update :
+                                        </span><span><button icon="pi pi-pencil" pButton type="button"
+                                                pTooltip="Tap to edit" (click)="onEdit(rowData)">
+                                            </button></span>
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">
+                                            Delete :
+                                        </span><span><button icon="pi pi-trash" pButton type="button"
+                                                pTooltip="Tap to delete" (click)="onDelete(rowData)">
+                                            </button></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+
+                    <p-dialog #dialog header="Home Page Image" [(visible)]="showDialog" [modal]="showDialog"
+                        [maximizable]="true" [style]="{width: '50vw', height: '40vw'}">
+                        <img alt="TN ADW Hostel Home image" [src]="homeImage" style="vertical-align: middle ; width:-webkit-fill-available;" />
+                    </p-dialog>
+
+                    <p-confirmDialog #cd [style]="{width: '50vw'}" [appendTo]="dialog">
+                        <ng-template pTemplate="header">
+                            <span>Alert</span>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                        </ng-template>
+                    </p-confirmDialog>
+                </p-card>
+            </form>
+        </p-panel>
+    </div>
+</div>

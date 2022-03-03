@@ -1,0 +1,80 @@
+<block-ui> 
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Student Registration">
+            <form #f="ngForm" name="studentFeedback">
+                <p-card>
+                    <div class="p-col-12 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-2"></div>
+                            <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label for="_district">District<span class="form-mandatory-field">*</span>
+                                        </label>
+                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                            (onClick)="onSelect('D')" (onChange)="refreshFields('D')" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                        <label for="_taluk">Taluk<span class="form-mandatory-field">*</span>
+                                        </label>
+                                        <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                            (onClick)="onSelect('T')" (onChange)="refreshFields('T')" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                        <label for="_hostelname">Hostel Name<span
+                                                class="form-mandatory-field">*</span></label>
+                                        <p-dropdown name="_hostelname" [options]="hostelOptions" [(ngModel)]="hostel"
+                                            (onClick)="onSelect('HN')" (onChange)="loadStudentsData()" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-12 p-lg-3">
+                                                <div><label for="_aadharno">Aadhar No<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <span class="p-input-icon-right">
+                                                    <i class="pi pi-search"></i>
+                                                    <input type="text" class="p-col-12" name="_aadharno" pInputText
+                                                        [(ngModel)]="aadharNo" minlength="12"
+                                                        (ngModelChange)="onAadharChange()" (input)="onSearch()"
+                                                        appInputFormat="digitOnly" maxlength="12" />
+                                                </span>
+                                            </div>
+                                            <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                <div><label for="_studentName">Name<span
+                                                            class="form-mandatory-field">*</span></label></div>
+                                                <input type="text" class="p-col-12" name="_studentName" pInputText
+                                                    [(ngModel)]="studentName" style="text-transform: capitalize;"
+                                                    readonly="true" />
+                                            </div>
+                                            <div *ngIf="enableField" class="p-col-12 p-md-6 p-lg-3 no-pad-left">
+                                                <label for="_email">Email Id<span
+                                                        class="form-mandatory-field">*</span></label>
+                                                <span class="p-input-icon-right">
+                                                    <i *ngIf="checkEmail" class="pi pi-spin pi-spinner"></i>
+                                                    <input type="email" class="p-col-12" name="_email"
+                                                        (input)="checkIfEmailExists()" pInputText [(ngModel)]="email" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12"></div>
+                            <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                <button pButton type="button" label="Submit" icon="pi pi-check-circle"
+                                    (click)="onSubmit()"
+                                    [disabled]="(!f.valid || !email || disableSave)"></button>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </p-card>
+            </form>
+        </p-panel>
+    </div>
+</div>
+</block-ui>

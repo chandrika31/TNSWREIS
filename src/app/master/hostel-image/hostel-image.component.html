@@ -1,0 +1,48 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Hostel-Image">
+                <p-card>
+                    <form #f="ngForm" name="hostelimageForm">
+                        <div class="p-col-12 p-md-12 p-lg-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <div class="no-pad-top"><label>Hostel Name</label> </div>
+                                    <input type="text" [(ngModel)]="hostelname" name="hostelname" readonly="true"
+                                        pInputText required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>District Name</label> </div>
+                                    <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
+                                        placeholder="District Name" readonly="true" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>Taluk Name</label> </div>
+                                    <input type="text" name="talukname" [(ngModel)]="talukname" readonly="true"
+                                        placeholder="Taluk Name" pInputText required />
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12"></div>
+                                <div *ngIf="showCapture" class="p-col-12 p-md-12 p-lg-12">
+                                    <div class="p-grid">
+                                        <div class="actionBtn" (click)="camera()" title="Click to Open Camera">📸</div>
+                                        <button pButton type="button" class="p-col-12" label="Capture"
+                                            (click)="capture()" [disabled]="(disableCapture)"icon="pi pi-camera" class="btn-bg"></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="openCamera">
+                                    <app-camera (pictureTaken)="handleImage($event)" [capture]="triggerObservable"
+                                        (triggerCamera)="captureImage()" style="margin-left: 3%;"></app-camera>
+                                </div>
+                                <div class="snapshot" *ngIf="webcamImage">
+                                    <img #webCamImg [src]="webcamImage.imageAsDataUrl" />
+                                </div>
+                                <div *ngIf="!showCapture">
+                                    <img [src]="hostelImage" style="width: 300px; height: 250px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </p-card>
+            </p-panel>
+        </div>
+    </div>

@@ -1,0 +1,260 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+                <p-panel header="Purchase Order">
+                    <div class="p-col-12 p-md-12 p-lg-12 border-blue card">
+                        <form #f="ngForm" name="purchaseForm">
+                            <div #maingrid1 class="p-grid" style="margin-top: 5px;">
+                                <div class="p-col-1"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10 border-blue">
+                                    <div class="div-header" style="font-weight: 500;">Bill Details </div>
+                                    <div #grid1 class="p-grid div-main">
+                                        <div #field1 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_billno" id="billno" pInputText
+                                                    [(ngModel)]="billNo" required>
+                                                <label for="_billno">Bill No</label>
+                                            </span>
+                                        </div>
+                                        <div #field2 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="billDate"
+                                                    name="_billdate" [showIcon]="true"  [maxDate]="maxDate" required>
+                                                </p-calendar>
+                                                <label for="_billdate">Bill Date</label>
+                                            </span>
+                                        </div>
+                                        <div #field3 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_billamnt" id="billamnt" pInputText
+                                                    [(ngModel)]="billAmount" required>
+                                                <label for="_billamnt">Bill Total Amount</label>
+                                            </span>
+                                        </div>
+                                        <div #field4 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_shopname" id="shopname" pInputText
+                                                    [(ngModel)]="shopName" required>
+                                                <label for="_shopname">Shop Name</label>
+                                            </span>
+                                        </div>
+                                        <div #field5 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_gstno" id="gstno" pInputText
+                                                    [(ngModel)]="gstNo" required>
+                                                <label for="_gstno">GST No</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div #maingrid2 class="p-grid" style="margin-top: 5px;">
+                                <div class="p-col-1"></div>
+                                <div #row2 class="p-col-12 p-md-12 p-lg-10 border-blue">
+                                    <div class="div-header" style="font-weight: 500;">Commodity Details </div>
+                                    <div #grid2 class="p-grid div-main">
+                                        <div #field6 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <p-dropdown name="_commodity" [options]="commodityOptions"
+                                                    (onClick)="onSelect('CM')" [(ngModel)]="commodity"
+                                                    optionLabel="label">
+                                                </p-dropdown>
+                                                <label for="_commodity">Commodity</label>
+                                            </span>
+                                        </div>
+                                        <div #field7 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <p-dropdown name="_unit" [options]="unitOptions"
+                                                    (onClick)="onSelect('UN')" [(ngModel)]="unit"
+                                                    (onChange)="calculateTotal()" optionLabel="label">
+                                                </p-dropdown>
+                                                <label for="_unit">Unit</label>
+                                            </span>
+                                        </div>
+                                        <div #field8 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_quantity" pInputText [(ngModel)]="quantity"
+                                                    (input)="calculateTotal()">
+                                                <label for="_quantity">Quantity</label>
+                                            </span>
+                                        </div>
+                                        <div #field9 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_rate" id="gstno" pInputText [(ngModel)]="rate"
+                                                    (input)="calculateTotal()">
+                                                <label for="_rate">Rate</label>
+                                            </span>
+                                        </div>
+                                        <div #field10 class="p-field p-col-12 p-md-6 p-lg-2">
+                                            <span class="p-float-label">
+                                                <input type="text" name="_total" pInputText [(ngModel)]="total"
+                                                    readonly="true">
+                                                <label for="_total">Total</label>
+                                            </span>
+                                        </div>
+                                        <div class="p-col-12 p-md-7 p-lg-1" [ngClass.xs]="'txt-center'" [ngClass.lt-sm]="'txt-center'" 
+                                                [ngClass.lt-md]="'txt-end'" style="margin-top: 1.5rem">
+                                            <button pButton type="button" label="Enter"
+                                                [disabled]="(!total || !rate || !quantity || !commodity || !unit || !f.valid)"
+                                                (click)="onEnter()"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div #row3 *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
+                                <p-table styleClass="p-datatable-gridlines" [columns]="purcahseOrderCols" [value]="purcahseOrderData" [paginator]="true"
+                                    [loading]="loading" [rows]="10">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 100px">S.No</th>
+                                            <th *ngFor="let col of columns">
+                                                {{col.header}}
+                                            </th>
+                                            <th style="width: 120px">Edit</th>
+                                            <th style="width: 120px">Delete</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData
+                                        let-columns="columns">
+                                        <tr [ngStyle]="{'background-color': getColor(rowData.Commodity)}">
+                                            <td *ngIf="(rowData.Commodity != 'Total Amount')" style="width: 100px">
+                                                {{rowIndex+1}}</td>
+                                            <td *ngIf="(rowData.Commodity == 'Total Amount')" style="width: 100px"></td>
+                                            <td *ngFor="let col of columns" [style.text-align]="col.align">
+                                                {{rowData[col.field]}}
+                                            </td>
+                                            <td *ngIf="(rowData.Commodity != 'Total Amount')" style="width: 120px"
+                                                (click)="onEdit(rowData, rowIndex, 1)">
+                                                <button style="height: 1.8rem;" icon="pi pi-pencil" pButton
+                                                    type="button">
+                                                </button>
+                                            </td>
+                                            <td *ngIf="(rowData.Commodity != 'Total Amount')" style="width: 120px"
+                                                (click)="onDelete(rowData, rowIndex, 1)">
+                                                <button style="height: 1.8rem;" icon="pi pi-trash" pButton
+                                                    type="button">
+                                                </button>
+                                            </td>
+                                            <td *ngIf="(rowData.Commodity == 'Total Amount')" style="width: 120px"></td>
+                                            <td *ngIf="(rowData.Commodity == 'Total Amount')" style="width: 120px"></td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <div #row4 class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Save" icon="pi pi-save" (click)="onSave()"
+                                        [disabled]="(!f.valid || orderList.length==0 || !f.dirty)"></button>&nbsp;
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="onView()"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="onClearAll()"></button>
+                            </div>
+                        </form>
+                    </div>
+                </p-panel>
+            </div>
+            <p-confirmDialog #cd [style]="{width: '50vw'}">
+                <!-- *ngIf="showAlertBox" -->
+                <ng-template pTemplate="header">
+                    <span>Alert</span>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+                    <button type="button" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+                </ng-template>
+            </p-confirmDialog>
+            <p-dialog #dialog header="Purchase Bill Details" [(visible)]="showDialog"
+                [modal]="showDialog">
+                <p-toast position="top-center" key="t-dialog-msg"></p-toast>
+                <div class="p-grid div-main">
+                    <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                        <div><label for="_fdate">From Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="fromDate" [showIcon]="true"
+                            [maxDate]="maxDate" (ngModelChange)="loadPurchaseBills()" name="_fdate"></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                        <div><label for="_tdate">To Date<span class="form-mandatory-field">*</span></label></div>
+                        <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="toDate" [showIcon]="true" [maxDate]="maxDate"
+                            (ngModelChange)="loadPurchaseBills()" name="_tdate"></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-table styleClass="p-datatable-gridlines" [columns]="purchaseBillCols"
+                            [value]="purchasedBillList" [paginator]="true" [rows]="10" [loading]="spinner">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 100px">S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th style="width: 120px">Edit</th>
+                                    <th style="width: 120px">Delete</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData let-columns="columns">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onEdit(rowData, rowIndex, 2)">
+                                        <span class="p-column-title">
+                                            Edit :
+                                        </span>
+                                        <span>
+                                        <button style="height: 1.8rem;" icon="pi pi-pencil" pButton type="button">
+                                        </button></span>
+                                    </td>
+                                    <td style="width: 120px" (click)="onDelete(rowData, rowIndex, 2)">
+                                        <span class="p-column-title">
+                                            Delete :
+                                        </span>
+                                        <span>
+                                        <button style="height: 1.8rem;" icon="pi pi-trash" pButton type="button">
+                                        </button></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <p-dialog #innerdialog [(visible)]="showInnerDialog" [modal]="showInnerDialog" header="Alert"
+                        [style]="{width: '90vw', height: '90vw'}" [appendTo]="dialog">
+                        <div class="p-col-12 p-md-12 p-lg-12" style="margin-top: 1.2rem;">
+                            <span><i class="pi pi-exclamation-triangle" style="font-size:1.2rem; margin-right: 5px;"></i>
+                                <span style="font-size: 16px;">Do you want to delete the record?</span>
+                            </span>
+                        </div>
+                        <ng-template pTemplate="footer">
+                            <div class="p-col-12 p-md-12 p-lg-12" style="text-align: end;">
+                                <div class="p-grid">
+                                    <div class="p-col-8"></div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <button icon="pi pi-check" pButton type="button" (click)="cd.accept()"
+                                            label="Yes" style="height: 30px; width: 70px;">
+                                        </button>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <button icon="pi pi-times" pButton type="button"
+                                            (click)="showInnerDialog=false;" label="No"
+                                            style="height: 30px; width: 70px;">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dialog>
+                </div>
+            </p-dialog>
+        </div>
+</block-ui>

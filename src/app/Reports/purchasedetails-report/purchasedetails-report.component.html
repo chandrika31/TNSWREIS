@@ -1,0 +1,89 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Purchase Details Report">
+                <p-card>
+                    <div class="p-col-12 no-pad-top">
+                        <div class="p-grid">
+                            <div class="p-col-2"></div>
+                            <div class="p-col-12 p-md-12 p-lg-10">
+                                <div class="p-grid">
+                                    <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                                        <div><label for="_district">District</label>
+                                        </div>
+                                        <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                            (onClick)="onSelect('D')" (ngModelChange)="reloadFields('D')" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div #row1 class="p-col-6 p-md-6 p-lg-2">
+                                        <div><label for="_taluk">Taluk</label>
+                                        </div>
+                                        <p-dropdown name="_taluk" [options]="talukOptions" [(ngModel)]="taluk"
+                                            (onClick)="onSelect('T')" (ngModelChange)="reloadFields('T')" required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_hostel">Hostel Name</label>
+                                        </div>
+                                        <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                          required>
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div class="no-pad-top"><label>From Date</label> </div>
+                            <p-calendar [showOtherMonths]="false" dateFormat="dd/mm/yy" [(ngModel)]="fromdate" (onSelect)="loadTable()" 
+                            [showIcon]="true" name="_fromdate" required>
+                            </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div class="no-pad-top"><label>To Date</label> </div>
+                            <p-calendar [showOtherMonths]="false" dateFormat="dd/mm/yy" [(ngModel)]="todate" (onSelect)="loadTable()"
+                             [showIcon]="true" name="_todate" required>
+                            </p-calendar>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <div style="text-align: right;">
+                            <button pButton type="button" icon="pi pi-file-excel" label="Export"
+                                style="color: yellowgreen;" (click)="dt.exportCSV()"
+                                pTooltip="Excel-File download"></button>
+                        </div>
+                        <p-table #dt [columns]="hostelCols" [value]="hostelData" [paginator]="true" [rows]="100"
+                            [rowsPerPageOptions]="[10,30,50,100]" styleClass="p-datatable-gridlines" 
+                            exportFilename="EMPLOYEEATTENDANCE_REPORT">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 45px;">S.No</th>
+                                    <th *ngFor="let col of columns" [style.width]="col.width">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                <tr class="tr-border">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-card>
+            </p-panel>
+        </div>
+    </div>

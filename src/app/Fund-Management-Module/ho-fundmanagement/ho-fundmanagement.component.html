@@ -1,0 +1,120 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="HO-Fund Management">
+                <form #f="ngForm" name="hoFundForm">
+                    <p-card>
+                        <div class="p-col-2"></div>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div class="p-col-2"></div>
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_year">Accounting Year<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('AY')"
+                                                [(ngModel)]="year" (onChange)="loadData()" required>
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_gonumber">GO No.<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <input type="text" name="_gonumber" class="p-col-12" pInputText
+                                                [(ngModel)]="goNumber" appInputFormat="digitOnly" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_date">Date<span
+                                                        class="form-mandatory-field">*</span></label>
+                                            </div>
+                                            <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false"
+                                                [(ngModel)]="Date" name="_date" [showIcon]="true" required>
+                                            </p-calendar>
+                                        </div>
+                                        <div class="p-col-12 p-md-12 p-lg-2">
+                                            <div><label for="_budjetamnt">Total Budget Amount<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <input type="text" name="_budjetamnt" class="p-col-12" pInputText
+                                                [(ngModel)]="budjetAmount" appInputFormat="digitOnly" required />
+                                        </div>
+                                        <div *ngIf="showFields" #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_type">Group Type<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_type" [options]="groupTypeOptions"
+                                                        [(ngModel)]="groupType" (onClick)="onSelect('GT')" (onChange)="loadAmount()" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_accHead">Account Head<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_accHead" [options]="accHeadOptions"
+                                                        (onClick)="onSelect('AH')" [(ngModel)]="accountHead"
+                                                        (onChange)="loadAmount()" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_blncamount">Available Budget Amount</label></div>
+                                                    <input type="text" name="_blncamount" class="p-col-12" pInputText
+                                                        [(ngModel)]="blncAmount" readonly="true" required />
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_headamount">Amount<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" name="_headamount" class="p-col-12" pInputText
+                                                        [(ngModel)]="headAmount" (input)="checkBudjetAmount()"
+                                                        appInputFormat="digitOnly" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Save" icon="pi pi-save"
+                                        (click)="onSave()" [disabled]="(!f.valid)"></button>&nbsp;
+                                    <!-- <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="showTable">
+                            <p-table [value]="AccountHeadData" [columns]="AccountHeadCols"
+                                styleClass="p-datatable-gridlines" [paginator]="true" [rows]="40"
+                                [rowsPerPageOptions]="[10,20,30,40]" [loading]="loading">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 50px;">S.No</th>
+                                        <th *ngFor="let col of columns">
+                                            {{col.header}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                    <tr class="tr-border">
+                                        <td class="td-border">
+                                            <span class="p-column-title">
+                                                S.No :
+                                            </span>
+                                            <span style="text-align: end;">
+                                                {{rowIndex+1}}
+                                            </span>
+                                        </td>
+                                        <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                            <span class="p-column-title">
+                                                {{col.header}} :
+                                            </span>
+                                            <span style="text-align: end;"> {{rowData[col.field]}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-card>
+                </form>
+            </p-panel>
+        </div>
+    </div>
+</block-ui>

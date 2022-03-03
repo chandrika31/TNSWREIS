@@ -1,0 +1,104 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Hostel GO">
+            <form #f="ngForm" name="hostelgoForm">
+                <p-card>
+                    <div class="p-col-12 no-pad-top" style="margin-left: -8px;">
+                        <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_district">District<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                        (onClick)="onSelect('DT')" (onChange)="refreshFields('D')"  required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_taluk">Taluk<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_taluk" [options]="talukIdOptions" [(ngModel)]="taluk"
+                                        (onClick)="onSelect('TK')" (onChange)="refreshFields('T')"   
+                                        required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <label for="_hostel">Hostel Name<span class="form-mandatory-field">*</span></label>
+                                    <p-dropdown name="_hostel" [options]="hostelOptions" [(ngModel)]="hostel"
+                                         required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_gono">Go. No<span class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <input type="text" name="_gono" class="p-col-12" pInputText [(ngModel)]="gono"
+                                        required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_godate">Go.Date<span class="form-mandatory-field">*</span></label>
+                                    </div>
+                                    <p-calendar dateFormat="dd/mm/yy" [showOtherMonths]="false" [(ngModel)]="goDate" name="_godate"
+                                        [showIcon]="true" [monthNavigator]="true" required></p-calendar>
+                                </div>
+                                <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div><label for="_totalstudent">Sanction strength<span
+                                                        class="form-mandatory-field">*</span></label>
+                                            </div>
+                                            <input type="text" name="_totalstudent" class="p-col-12" pInputText
+                                                [(ngModel)]="totalstudent" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div><label for="_remarks">Remarks<span
+                                                        class="form-mandatory-field">*</span></label>
+                                            </div>
+                                            <textarea type="text" name="_remarks" class="p-col-12" pInputText
+                                                [(ngModel)]="remarks" rows="2" cols="15" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton type="button" label="Submit" (click)="onSave()" icon="pi pi-save"
+                                        class="btn-bg"></button>&nbsp;
+                                    <button pButton type="button" label="View" (click)="onView()" icon="pi pi-eye"
+                                        class="btn-bg"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                        [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                        styleClass=p-datatable-gridlines>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th>S.No</th>
+                                <th *ngFor="let col of columns" [style.width]="col.width">
+                                    {{col.header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                            <tr [pSelectableRow]="rowData" class="td-border cursor-pointer"
+                                (dblclick)="onRowSelect($event, rowData)">
+                                <td class="td-border">
+                                    <span class="p-column-title">
+                                        S.No :
+                                    </span>
+                                    <span>
+                                        {{rowIndex+1}}
+                                    </span>
+                                </td>
+                                <td *ngFor="let col of columns" class="td-border">
+                                    <span class="p-column-title">
+                                        {{col.header}} :
+                                    </span>
+                                    <span> {{rowData[col.field]}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-card>
+            </form>
+        </p-panel>
+    </div>
+</div>

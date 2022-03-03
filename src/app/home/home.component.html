@@ -1,0 +1,61 @@
+<block-ui>
+<div #home class="p-col-12 p-md-12 p-lg-12">
+    <div class="p-grid">
+        <div class="p-col-1 no-padding"></div>
+        <div class="p-col-12 p-md-10 p-lg-10 txt-center">
+            <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions" [numVisible]="5" [autoPlay]="true" [circular]="true"
+                [transitionInterval]="2500" [showThumbnails]="false">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="item.previewImageSrc" [ngClass.sm]="'home-img-sm'" [ngClass.xs]="'home-img-xs'" [ngClass.md]="'home-img-md'"
+                        [ngClass.lg]="'home-img-lg'" [ngClass.lt-lg]="'home-img-lt-lg'" [ngClass.gt-md]="'home-img-gt-md'" />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="p-grid p-nogutter p-justify-center">
+                        <img [src]="item.thumbnailImageSrc" style="width: 100px;height: 100px; display: block;" />
+                    </div>
+                </ng-template>
+            </p-galleria>
+
+            <div class="p-grid">
+                <div class="p-col-1"></div>
+                <div class="p-col-10" style="text-align: center;"><br>
+                    <div style="color: #08747b;
+                    font-weight: 600;
+                    font-style: italic;">
+                        <div class="p-grid">
+                            <div class="p-col-4"></div>
+                            <div class="p-col-10 p-md-10 p-lg-6 no-pad-top txt-start">
+                                <span> "பிறப்பொக்கும் எல்லா உயிர்க்கும் சிறப்பொவ்வா</span><br />
+                                <span> செய்தொழில் வேற்றுமை யான்".</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-10 no-pad-top txt-end">
+                        -- திருவள்ளுவர்
+                    </div>
+                    <div style="text-align: justify;"   >
+                        <p>
+                            The Adi Dravidar and Tribal welfare Department was set up 1988 after the trifurcation of
+                            Social Welfare Deparment, with the
+                            objective of providing a more focused approach towards the integrated socio-econimic and
+                            educational development of the underprivileged Adi Dravidar and Scheduled Tribles in a
+                            co-ordinated and planned manner.</p>
+                        <p> This department is taking sincere efforts to promote education and raise the socio-economic
+                            status of the Adi Dravidar and Tribal communities and unlift them by introducing and
+                            inplementing various welfare schemes.</p>
+                        <p> Schemes such as, running of Adi Dradivar Welfare schools, hostels, issuing house site pattas
+                            and improving basic amenties in Adi Dravidar habitations are being implemented through the
+                            commissionerate of Adi Dravidar welfare, for the education socio-economic development of
+                            people belonging to Adi Dravidar community.</p>
+                        A State Level Vigilance and Monitoring Committee has been constitute under the chairmanship
+                        of the Hon'ble Cheif Minister to review the implementation of scheduled castes and schduled
+                        Tribles (Prevention of Atrocities) Act.
+                    </div>
+                </div>
+                <div class="p-col-1"></div>
+            </div>
+        </div>
+        <div class="p-col-1 no-padding"></div>
+    </div>
+</div>
+</block-ui>

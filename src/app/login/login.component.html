@@ -1,0 +1,48 @@
+<div #login class="p-col-12 p-md-12 p-lg-12">
+    <p-toast position="top-center" key="t-msg"></p-toast>
+    <div class="p-grid">
+        <div class="p-col-3"></div>
+        <div class="p-col-12 p-md-10 p-lg-6 no-padding card">
+            <div class="txt-center">
+                <img src="assets/layout/images/TN_Govt_Logo.png" class="menu-logo">
+            </div>
+            <div style="height: 50px;" class="login-header">
+                <div class="txt-center login-header-txt">TN ADW HOSTEL MANAGEMENT SYSTEM LOGIN</div>
+            </div>
+            <div class="p-col-12 txt-center">
+                <img src="assets/layout/images/welfare-logo3x.png">
+            </div>
+            <div class="p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-12 p-md-12 p-lg-6">
+                    <div #uname class="p-col-12 p-md-12 p-lg-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                            <input type="text" pInputText placeholder="Username" [(ngModel)]="username" required>
+                        </div>
+                    </div>
+                    <div #pwd class="p-col-12 p-md-12 p-lg-12">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                            <input id="pswd" type="password" pInputText placeholder="Password" [(ngModel)]="password"
+                                required>
+                            <span class="p-inputgroup-addon" (click)="onShowPswd()">
+                                <i *ngIf="!showPswd" disabled class="fa fa-eye" aria-hidden="true"></i>
+                                <i *ngIf="showPswd" class="fa fa-eye-slash" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 txt-center align-center">
+                <button pButton type="button" label="Sign In" icon="pi pi-sign-in" (click)="onLogin()"></button>
+            </div>
+            <div class="p-col-12 txt-center">
+                <span class="login-text">New Student to Login?</span>
+                <span class="login-link" routerLink="/studentfeedback-registration" routerLinkActive="active"> Create your
+                    user account now</span>
+            </div>
+        </div>
+        <div class="p-col-3"></div>
+    </div>
+</div>

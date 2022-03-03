@@ -1,0 +1,135 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Monthlywise Intent">
+                <form #f="ngForm" name="monthlywiseintent">
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div class="no-pad-top"><label>Month</label> </div>
+                                            <!-- <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="date" required>
+                                            </p-calendar> -->
+                                            <p-calendar [(ngModel)]="date" view="month" dateFormat="mm" [readonlyInput]="true" inputId="monthpicker"></p-calendar>
+                                          </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                            <label for="_district">District<span class="form-mandatory-field">*</span>
+                                            </label>
+                                            <input type="text" class="p-col-12" name="_district" pInputText
+                                                [(ngModel)]="district" readonly="true" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                            <label for="_taluk">Taluk<span class="form-mandatory-field">*</span>
+                                            </label>
+                                            <input type="text" class="p-col-12" name="_taluk" pInputText
+                                                [(ngModel)]="taluk" readonly="true" required />
+                                        </div>
+                                        <div class="p-col-12 p-md-6 p-lg-4 no-pad-left">
+                                            <label for="_hostelname">Hostel Name<span
+                                                    class="form-mandatory-field">*</span></label>
+                                            <input type="text" class="p-col-12" name="_hostelname" pInputText
+                                                [(ngModel)]="hostelName" readonly="true" required />
+                                        </div>
+                                        <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_year">Accounting Year<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_year" [options]="yearOptions"
+                                                        (onClick)="onSelect('Y')" [(ngModel)]="year" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                                                    <label for="_commodityName">Commodity Name<span
+                                                            class="form-mandatory-field">*</span></label>
+                                                    <p-dropdown name="_commodityName" [options]="commodityOptions"
+                                                        [(ngModel)]="commodityName" (onClick)="onSelect('CN')" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2 no-pad-left">
+                                                    <div><label for="_unit">Unit<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <p-dropdown name="_unit" [options]="unitOptions"
+                                                        (onClick)="onSelect('U')" [(ngModel)]="unit" required>
+                                                    </p-dropdown>
+                                                </div>
+                                                <div class="p-col-12 p-md-12 p-lg-2">
+                                                    <div><label for="_quantity">Quantity<span
+                                                                class="form-mandatory-field">*</span></label></div>
+                                                    <input type="text" class="p-col-12" name="_quantity" pInputText
+                                                        [(ngModel)]="quantity" />
+                                                </div>
+                                                <!-- <div class="p-col-12 p-md-6 p-lg-2">
+                                                    <div class="no-pad-top"><label>Month</label> </div>
+                                                    <p-calendar [showOtherMonths]="false" [(ngModel)]="date" [showIcon]="true" name="date" required>
+                                                    </p-calendar>
+                                                  </div> -->
+                                                <div class="p-col-12"></div>
+                                                <!-- <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                                    <button pButton type="button" label="Save" icon="pi pi-save"
+                                                        (click)="onSubmit()" [disabled]="(!f.valid || !f.dirty)"></button>&nbsp;
+                                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                                        (click)="onView()"></button>
+                                               </div> -->
+
+                                               <div class="p-col-12 p-md-6 p-lg-12 txt-center">
+                                                <button pButton name="save" type="button" label="Submit" icon="pi pi-save" 
+                                                (click)="onSubmit()" [disabled]='(!f.valid || !f.dirty)'></button>&nbsp;
+                                
+                                                <button pButton type="button" label="View" icon="pi pi-eye" (click)="onView()"></button>&nbsp;
+                                                <button pButton type="button" label="Clear" icon="pi pi-trash" (click)="clearform()"></button>
+                                               
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+           
+<!-- show table -->
+<div *ngIf="showTable" class="p-col-12 p-md-12 p-lg-12">
+    <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]"
+            totalRecords="totalRecords"  styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>S.No</th>
+                    <th *ngFor="let col of columns" >
+                        {{col.header}}
+                    </th>
+
+                </tr>
+            </ng-template>
+
+
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="rowData" class=" tr-border cursor-pointer" (dblclick)="onRowSelect($event, rowData)">
+                    <td class="td-border">
+                        <span class="p-column-title">
+                            S.No :
+                        </span>
+                        <span style="text-align: end;">
+                            {{rowIndex+1}}
+                        </span>
+                    </td>
+                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                        <span class="p-column-title">
+                            {{col.header}} :
+                        </span>
+                        <span style="text-align: end;"> {{rowData[col.field]}}
+                        </span>
+                    </td>
+                </tr>
+
+
+            </ng-template>
+        </p-table>
+</div>
+</p-card>
+</form>
+</p-panel>
+</div>
+</div>
+

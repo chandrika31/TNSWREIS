@@ -1,0 +1,72 @@
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-12">
+        <p-toast position="top-center" key="t-msg"></p-toast>
+        <p-panel header="Fund Management Report">
+            <p-card>
+                <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                    <div class="p-grid">
+                        <div class="p-col-1"></div>
+                        <div #row1 class="p-col-12 p-md-12 p-lg-10">
+                            <div class="p-grid">
+                                <div class="p-col-3"></div>
+                                <div class="p-col-12 p-md-12 p-lg-2">
+                                    <div><label for="_year">Accounting Year</label></div>
+                                    <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect('Y')"
+                                        [(ngModel)]="accYear" (onChange)="loadBudjet()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <!-- <div><label for="_district">District</label></div>
+                                    <p-dropdown name="_district" [options]="districtOptions" [(ngModel)]="district"
+                                        (onClick)="onSelect('D')" (onChange)="loadTable()" required>
+                                    </p-dropdown> -->
+                                    <div><label for="_acchead">Account Head</label></div>
+                                    <p-dropdown name="_acchead" [options]="accHeadOptions" [(ngModel)]="accHead"
+                                        (onClick)="onSelect('A')" (onChange)="loadTable()" required>
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-2">
+                                    <div><label for="_budjetamnt">Total Budjet Amount</label></div>
+                                    <input type="text" name="_budjetamnt" class="p-col-12" pInputText
+                                        [(ngModel)]="budjetAmount" readonly="true" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-12 p-lg-12 no-padding">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-1 p-lg-1 no-padding"></div>
+                        <div class="p-col-12 p-md-10 p-lg-10 no-padding">
+                            <p-treeTable [value]="treeData" [loading]="loading">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 120px;">S.No.</th>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                        <th>Expenditure</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-rowIndex="rowIndex">
+                                    <tr [ttRow]="rowNode" [ngStyle]="{'background-color': getColor(rowData.hashType)}">
+                                        <td style="width: 120px;">
+                                            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                                            {{rowData.slno}}.
+                                        </td>
+                                        <td>
+                                            {{rowData.name}}
+                                        </td>
+                                        <td style="text-align: right !important;">{{rowData.amount}}</td>
+                                        <td style="text-align: right !important;">0</td>
+                                        <td style="text-align: right !important;">0</td>
+                                    </tr>
+                                </ng-template>
+                            </p-treeTable>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </p-panel>
+    </div>
+</div>

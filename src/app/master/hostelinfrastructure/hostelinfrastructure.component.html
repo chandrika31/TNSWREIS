@@ -1,0 +1,272 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Hostel InfraStructure">
+                <p-card>
+                    <form #f="ngForm" name="hostelinfrastructure">
+                        <div class="p-col-12 p-md-12 p-lg-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6 p-lg-4">
+                                    <div class="no-pad-top"><label>Hostel Name</label> </div>
+                                    <input type="text" [(ngModel)]="hostelname" name="hostelname" readonly="true"
+                                        pInputText required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>District Name</label> </div>
+                                    <input type="text" name="districtname" pInputText [(ngModel)]="districtname"
+                                        placeholder="District Name" readonly="true" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div class="no-pad-top"><label>Taluk Name</label> </div>
+                                    <input type="text" name="talukname" [(ngModel)]="talukname" readonly="true"
+                                        placeholder="Taluk Name" pInputText required />
+                                </div>
+
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_totalarea">Total Area (Sqf)<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <input type="text" pInputText [(ngModel)]="TotalArea" name="TotalArea" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-1"></div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_buildingarea">Building Area (Sqf)<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <input type="text" pInputText [(ngModel)]="BuildingArea" name="BuildingArea"
+                                        required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2">
+                                    <div><label for="_nooffloor">No Of Floor<span
+                                                class="form-mandatory-field">*</span></label></div>
+                                    <input type="text" pInputText [(ngModel)]="NoOfFloor" name="NoOfFloor" required />
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2 checkbox-align">
+                                    <div class="p-col-12"><label for="_playground">Play Ground<span
+                                                class="form-mandatory-field">* </span></label>
+                                        <p-checkbox [(ngModel)]="playgroundCheck" [binary]="true" inputId="binary">
+                                        </p-checkbox>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-2 checkbox-align">
+                                    <div class="p-col-12"><label for="_compoundwall">Compound Wall<span
+                                                class="form-mandatory-field">* </span></label>
+                                        <p-checkbox [(ngModel)]="wallCheck" [binary]="true"></p-checkbox>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-6 p-lg-3 checkbox-align">
+                                    <div class="p-col-12"><label for="_ramp">Ramp facility for Physically Challenged<span
+                                                class="form-mandatory-field">* </span></label>
+                                        <p-checkbox [(ngModel)]="rampCheck" [binary]="true"></p-checkbox>
+                                    </div>
+                                </div>
+                                <!-- <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_noofroom">No Of Room<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" placeholder="-" [disabled]="true" pInputText [(ngModel)]="NoOfRoom" name="NoOfRoom" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_kitchen">Kitchen<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" placeholder="-" [disabled]="true" pInputText [(ngModel)]="Kitchen" name="Kitchen" required />
+                                    </div>
+                                    <div class="p-col-12 p-md-6 p-lg-2">
+                                        <div><label for="_bathroom">Bathroom<span
+                                                    class="form-mandatory-field">*</span></label></div>
+                                        <input type="text" placeholder="-" [disabled]="true" pInputText [(ngModel)]="Bathroom" name="Bathroom" required />
+                                    </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                                    <button pButton name="save" type="button" label="Submit" icon="pi pi-save"
+                                        (click)="onSubmit()" [disabled]='(!f.valid || disableFields)'></button>&nbsp;
+                                    <button pButton type="button" label="View" icon="pi pi-eye"
+                                        (click)="onview()"></button>&nbsp;
+                                    <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                        (click)="onClear(1)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <p-table [columns]="cols" [value]="data" [paginator]="true" [rows]="10"
+                            [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                            styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                    <th>
+                                        Floor-wise Details
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                <tr [pSelectableRow]="rowData" class=" tr-border cursor-pointer"
+                                    (dblclick)="onRowSelect($event, rowData)">
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+
+                                    </td>
+                                    <td>
+                                        <span class="p-column-title">
+                                            Floor-wise Details :
+                                        </span>
+                                        <span>
+                                            <button style="height: 1.8rem;" (click)="onEdit(rowData)" icon="pi pi-plus"
+                                                pButton type="button">
+                                            </button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <p-table [columns]="floorwisedetail" [value]="floorwisedetaildata" [paginator]="true"
+                            [rows]="10" [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords"
+                            styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                                <tr>
+                                    <td class="td-border">
+                                        <span class="p-column-title">
+                                            S.No :
+                                        </span>
+                                        <span style="text-align: end;">
+                                            {{rowIndex+1}}
+                                        </span>
+                                    </td>
+                                    <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                        <span class="p-column-title">
+                                            {{col.header}} :
+                                        </span>
+                                        <span style="text-align: end;"> {{rowData[col.field]}}
+                                        </span>
+
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </form>
+                </p-card>
+            </p-panel>
+            <p-dialog #dialog header="Enter Floor-wise Details" [(visible)]="showDialog" [modal]="showDialog"
+                [maximizable]="true" [style]="{width: '90vw', height: '90vw'}">
+                <p-toast position="top-center" key="t-dmsg"></p-toast>
+                <form #t="ngForm" name="hostelinfrastructureextent">
+                    <div class="p-grid div-main">
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_floor">Floor<span class="form-mandatory-field">*</span>
+                                </label>
+                            </div>
+                            <p-dropdown name="_floor" [options]="floorOptions" (onClick)="onSelect('FD')"
+                                (onChange)="onDataChecking()" [(ngModel)]="floor" required>
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_studstayingroom">Student Staying Rooms<span
+                                        class="form-mandatory-field">*</span>
+                                </label>
+                            </div>
+                            <input type="text" name="_studstayingroom" appInputFormat="digitOnly" pInputText
+                                [(ngModel)]="studentStayingRoom">
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_wardenstayingroom">Warden Staying Rooms<span
+                                        class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_wardenstayingroom" appInputFormat="digitOnly" pInputText
+                                [(ngModel)]="wardenStayingRoom">
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_library">Library<span class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_library" appInputFormat="digitOnly" [(ngModel)]="library"
+                                pInputText required />
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_kitchen">Kitchen<span class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_kitchen" appInputFormat="digitOnly" [(ngModel)]="kitchen"
+                                pInputText required />
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_bathroom">Bathroom<span class="form-mandatory-field">*</span></label>
+                            </div>
+                            <input type="text" name="_bathroom" appInputFormat="digitOnly" [(ngModel)]="bathroom"
+                                pInputText required />
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_toilet">Toilet<span class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_toilet" appInputFormat="digitOnly" [(ngModel)]="toilet" pInputText
+                                required />
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_urine">Urinal<span class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_urine" appInputFormat="digitOnly" [(ngModel)]="urinal" pInputText
+                                required />
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-2 no-pad-left">
+                            <div><label for="_studentstudyingroom">Student Studying Area(Sqf)<span
+                                        class="form-mandatory-field">*</span></label></div>
+                            <input type="text" name="_studentstudyingroom" appInputFormat="digitOnly"
+                                [(ngModel)]="studentStudyingRoom" pInputText required />
+                        </div>
+
+                        <div class="p-col-12 p-md-12 p-lg-12 txt-center">
+                            <button pButton type="button" label="Submit" (click)="onUpdate()"
+                                class="btn-bg"></button>&nbsp;
+                            <button pButton type="button" label="View" icon="pi pi-eye"
+                                (click)="onLoad()"></button>&nbsp;
+                            <button pButton type="button" label="Clear" icon="pi pi-trash"
+                                (click)="onClear(2)"></button>
+                        </div>
+                    </div>
+                </form>
+                <p-table [columns]="floorwisedetail" [value]="floorwisedetaildata" [paginator]="true" [rows]="10"
+                    [rowsPerPageOptions]="[5,10,15,20]" totalRecords="totalRecords" styleClass="p-datatable-gridlines">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>S.No</th>
+                            <th *ngFor="let col of columns">
+                                {{col.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                        <tr (dblclick)="onRowSelect1(rowIndex, rowData)" [pSelectableRow]="rowData"
+                            class="cursor-pointer">
+                            <td class="td-border">
+                                <span class="p-column-title">
+                                    S.No :
+                                </span>
+                                <span style="text-align: end;">
+                                    {{rowIndex+1}}
+                                </span>
+                            </td>
+                            <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                <span class="p-column-title">
+                                    {{col.header}} :
+                                </span>
+                                <span style="text-align: end;"> {{rowData[col.field]}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-dialog>
+        </div>
+    </div>
+</block-ui>

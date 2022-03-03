@@ -1,0 +1,118 @@
+<block-ui>
+    <div class="p-grid">
+        <div class="p-col-12 p-md-12 p-lg-12">
+            <p-toast position="top-center" key="t-msg"></p-toast>
+            <p-panel header="Student Renewal/Discontinue">
+                <span style="font-size: 13px;color: #686666;">
+                    <span>* Note :</span>
+                    * Please select students from below list to transfer. <br/>
+                    * Once you selected the student, please click if he/she is pass/fail. <br/>
+                    * By clicking remarks, can type the feedback. <br/>
+                    * Once you selected all the required students along with pass/fail status, you can proceed to submit the list.<br/>
+                    * Once submitted, all the selected students will get transferred to same hostel.
+                </span>
+                    <p-card>
+                        <div class="p-col-12 no-pad-top">
+                            <div class="p-grid">
+                                <div #row1 class="p-col-12 p-md-12 p-lg-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-lg-2">
+                                            <div><label for="_year">Accounting Year<span
+                                                        class="form-mandatory-field">*</span></label></div>
+                                            <p-dropdown name="_year" [options]="yearOptions" (onClick)="onSelect()"
+                                                [(ngModel)]="year" (onChange)="loadStudentDetails()">
+                                            </p-dropdown>
+                                        </div>
+                                    <div class="p-col-9"></div>
+                                    <div class="p-col-6 p-md-6 p-lg-1" style="text-align: end; align-self: center;">
+                                        <button pButton type="button" label="Submit" icon="pi pi-send" (click)="onSubmit()"
+                                        [disabled]="(selectedStudentList.length==0)"></button>
+                                    </div>
+                                </div>
+                            </div>
+                                <div #row2 class="p-col-12 p-md-12 p-lg-12">
+                                    <p-table #dt styleClass="p-datatable-gridlines" [columns]="studentDetailCols"
+                                        [value]="studentDetails" [paginator]="true" dataKey="StudentId" [rows]="10"
+                                        (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+                                        <ng-template pTemplate="header" let-columns let-rowData>
+                                            <tr>
+                                                <th style="width: 3rem">
+                                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                </th>
+                                                <th style="width: 100px">S.No</th>
+                                                <th *ngFor="let col of columns">
+                                                    {{col.header}}
+                                                </th>
+                                                <th>Remarks</th>
+                                                <th>Pass/Fail</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-rowData
+                                            let-columns="columns">
+                                            <tr class="tr-border">
+                                                <td class="td-border">
+                                                    <span class="p-column-title">
+                                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                                    </span>
+                                                    <span style="text-align: end;">
+                                                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                                    </span>
+                                                </td>
+                                                <td class="td-border">
+                                                    <span class="p-column-title">
+                                                        S.No :
+                                                    </span>
+                                                    <span style="text-align: end;">
+                                                        {{rowIndex+1}}
+                                                    </span>
+                                                </td>
+                                                <td *ngFor="let col of columns" [style.text-align]="col.align" class="td-border">
+                                                    <span class="p-column-title">
+                                                        {{col.header}} :
+                                                    </span>
+                                                    <span style="text-align: end;"> {{rowData[col.field]}}
+                                                    </span>
+                                                </td>
+                                                <td pEditableColumn>
+                                                    <span class="p-column-title">
+                                                        Remarks :
+                                                    </span>
+                                                    <span>
+                                                    <p-cellEditor>
+                                                        <ng-template pTemplate="input">
+                                                            <input pInputText type="text" [(ngModel)]="rowData.Remarks">
+                                                        </ng-template>
+                                                        <ng-template pTemplate="output">
+                                                            {{rowData.Remarks}}
+                                                        </ng-template>
+                                                    </p-cellEditor>
+                                                </span>
+                                                </td>
+                                                <td *ngIf="(rowData.showStatusSelector == 'true')">
+                                                    <span class="p-column-title">
+                                                        Pass/Fail :
+                                                    </span>
+                                                    <span>
+                                                    <p-radioButton name="_pass" label="Pass" value=1
+                                                        [(ngModel)]="rowData.studentStatus"
+                                                        (onClick)="onSelectToTransfer(rowData, 1)">
+                                                    </p-radioButton> &nbsp;
+                                                    <p-radioButton name="_fail" label="Fail" value=0
+                                                        [(ngModel)]="rowData.studentStatus"
+                                                        (onClick)="onSelectToTransfer(rowData, 0)">
+                                                    </p-radioButton>
+                                                </span>
+                                                </td>
+                                                <td *ngIf="(rowData.showStatusSelector == 'false')">
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+            </p-panel>
+        </div>
+    </div>
+</block-ui>
